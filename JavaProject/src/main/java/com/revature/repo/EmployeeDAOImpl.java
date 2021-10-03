@@ -12,29 +12,36 @@ import java.sql.ResultSet;
 public class EmployeeDAOImpl implements EmployeeDAO{
 	
 	Communication conn = new Communication();
+	//UPDATE
+	//stretch goal email 
 	
+	//CREATE
+	//stretch goal New User
+	
+	//DELETE
+	//Not needed here 
+	
+	//READ
 	@Override
-	public boolean selectEmployee(String username, String password) {
+	public boolean selectEmployee(Employee em) {
 		boolean success = false;
-		Employee em = new Employee();
+		
 		String sql = "SELECT * FROM employee where username = ? and password = ?";
 		try{
 			Connection connection = conn.connection();
 			
 			PreparedStatement ps = connection.prepareStatement(sql);
 	
-			ps.setString(1, username);
-			ps.setString(2, password);
+			ps.setString(1, em.getUsername());
+			ps.setString(2, em.getPassword());
 			
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				if (rs.getString("username")!=null) {
-					em.setEmployeeID(rs.getInt("id"));
+					
 					success = true;
 				}
-			}
-			
-		
+			}		
 		}catch(SQLException e) {
 			success = false;
 			e.printStackTrace();		
@@ -42,4 +49,12 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	return success;
 	}
 
+	@Override
+	public boolean selectFinanceManager(Employee em) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	
 }

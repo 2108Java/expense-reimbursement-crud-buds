@@ -1,5 +1,7 @@
 package com.revature.repo;
 
+import com.revature.models.Employee;
+
 public class DummyMainMethod {
 
 	public static void main(String[] args) {
@@ -7,7 +9,11 @@ public class DummyMainMethod {
 		
 		EmployeeDAO database = new EmployeeDAOImpl();
 		
-		if(database.selectEmployee("Harley", "starfish")) {
+		Employee em = new Employee();
+		em.setUsername("Harley");
+		em.setPassword("starfish");
+		
+		if(database.selectEmployee(em)) {
 			System.out.println("Logged in");
 		}else {
 			System.out.println("Failed Log in");
