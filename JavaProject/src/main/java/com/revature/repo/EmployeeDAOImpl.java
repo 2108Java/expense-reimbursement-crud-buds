@@ -51,10 +51,30 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
 	@Override
 	public boolean selectFinanceManager(Employee em) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean success = false;
+		String sql = "SELECT * FROM employee where username = ? and password = ? and is_finance_manager = ?";
+		try{
+			Connection connection = conn.connection();
+			
+			PreparedStatement ps = connection.prepareStatement(sql);
+	
+			ps.setString(1, em.getUsername());
+			ps.setString(2, em.getPassword());
+			ps.setBoolean(3, true);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				if (rs.getString("username")!=null) {
+					
+					success = true;
+				}
+			}		
+		}catch(SQLException e) {
+			success = false;
+			e.printStackTrace();		
+		}
+	return success;
 	}
 
-	
 	
 }
