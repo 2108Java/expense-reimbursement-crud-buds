@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import java.util.List;
+
 public class Employee {
 	
 	//Attributes
@@ -7,6 +9,7 @@ public class Employee {
 	private String username;
 	private String password;
 	private boolean isFinanceManager;
+	private List<Report> reportList;
 	//private String email;
 	
 	//Constructors
@@ -55,5 +58,18 @@ public class Employee {
 	public void setEmployeeID(int employeeID) {
 		this.employeeID = employeeID;
 	}
+
+
+	public List<Report> getReportList() {
+		return reportList;
+	}
+
+
+	public void setReportList(List<Report> reportList) {
+		this.reportList = reportList;
+	}
+	
+	
+	
 }
 
