@@ -33,7 +33,7 @@ public class RequestHandler {
 			);
 		
 		
-		app.post("/", ctx -> {
+		app.post("/authenticate", ctx -> {
 			
 					ac.authenticate(ctx);
 			
