@@ -2,6 +2,8 @@ package com.revature.repo;
 
 import com.revature.models.Employee;
 import com.revature.models.Report;
+import com.revature.service.Service;
+import com.revature.service.ServiceImpl;
 
 public class DummyMainMethod {
 
@@ -12,21 +14,25 @@ public class DummyMainMethod {
 		
 		ReportDAO database2 = new ReportDAOImpl();
 		
-		Employee em = new Employee();
-		Report report = new Report();
-		em.setUsername("Harley");
-		em.setPassword("starfish");
+		Service service = new ServiceImpl(database);
 		
-		if(database.selectEmployee(em)) {
-			System.out.println("Logged in");
+		String username = "Harley";
+		String password = "starfish";
+		Employee em = service.getEmployeeByUsername(username);
+		
+		Report report = new Report();
+	
+		
+		if(service.authenticateEmployee(username,password)) {
+			System.out.println("Logged in Harley");
 		}else {
 			System.out.println("Failed Log in");
 		}
 		
 		em.setUsername("Brandon");
 		
-		if(database.selectFinanceManager(em)) {
-			System.out.println("Logged in");
+		if(service.verifyManager(em.getUsername())) {
+			System.out.println("Logged in Brandon");
 		}else {
 			System.out.println("Failed Log in");
 		}

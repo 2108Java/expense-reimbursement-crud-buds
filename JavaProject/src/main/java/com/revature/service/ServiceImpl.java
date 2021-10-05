@@ -5,29 +5,48 @@ import com.revature.repo.EmployeeDAO;
 
 public class ServiceImpl implements Service{
 
-	private EmployeeDAO empDao;
+	private EmployeeDAO emDao;
 	
-	@Override
-	public boolean verify(String username) {
-		return false;
+	public ServiceImpl(EmployeeDAO emDao) {
+		this.emDao = emDao;
 	}
 	
 	@Override
-	public boolean authenticate(String username, String password){
-		return false;
+	public boolean verifyEmployeeExists(String username) {			
+		return emDao.isEmployee(username); 
+	}
+	
+	@Override
+	public Employee getEmployeeByUsername(String username) {
+		return emDao.selectEmployeeByUsername(username);
+	}
+	
+	@Override
+	public boolean authenticateEmployee(String username, String password){	
+		
+		boolean userExists = this.verifyEmployeeExists(username);
+		boolean authenticated = false;
+		
+		if(userExists) {
+			//System.out.println("User Exists");
+			Employee em = this.getEmployeeByUsername(username);
+			//System.out.println(un +" "+ pw);
+			
+			if(em.getPassword().equals(password)) {
+				authenticated = true;
+				System.out.println("Username & Password Match");
+			}else {
+				System.out.println("Username & Password Dont Match");
+			}
+		}
+		
+		return authenticated;
 	}
 
 	@Override
 	public boolean verifyManager(String username) {
-	
-		return false;
+		return emDao.isFinanceManager(username);
 	}
-
-	@Override
-	public Employee getUserByUsername(String username) {
-		return null;
-	}
-	
 	
 	
 }

@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 
 public class EmployeeDAOImpl implements EmployeeDAO{
 	
-	Communication conn = new Communication();
+	Communication comm = new Communication();
 	//UPDATE
 	//stretch goal email 
 	
@@ -23,58 +23,86 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	
 	//READ
 	@Override
-	public boolean selectEmployee(Employee em) {
-		boolean success = false;
+	public Employee selectEmployeeByUsername(String username) {
 		
-		String sql = "SELECT * FROM employee where username = ? and password = ?";
-		try{
-			Connection connection = conn.connection();
-			
+		Employee em = new Employee();
+		
+		try(Connection connection = comm.connection()){
+			String sql = "SELECT * FROM employee where username = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 	
-			ps.setString(1, em.getUsername());
-			ps.setString(2, em.getPassword());
+			ps.setString(1, username);
 			
 			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				if (rs.getString("username")!=null) {
-					
-					success = true;
-				}
-			}		
+			rs.next();
+		
+			em.setUsername(rs.getString("username"));
+			em.setPassword(rs.getString("password"));
+				
+			connection.close();
 		}catch(SQLException e) {
-			success = false;
 			e.printStackTrace();		
 		}
-	return success;
+	return em;
 	}
 
 	@Override
-	public boolean selectFinanceManager(Employee em) {
-		boolean success = false;
-		String sql = "SELECT * FROM employee where username = ? and password = ? and is_finance_manager = ?";
+	public boolean isFinanceManager(String username) {
+		
+		boolean isFinMan = false;
+		
+		String sql = "SELECT * FROM employee where username = ? and is_finance_manager = ?";
 		try{
-			Connection connection = conn.connection();
+			Connection connection = comm.connection();
 			
 			PreparedStatement ps = connection.prepareStatement(sql);
 	
-			ps.setString(1, em.getUsername());
-			ps.setString(2, em.getPassword());
-			ps.setBoolean(3, true);
+			ps.setString(1, username);
+			ps.setBoolean(2, true);
 			
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				if (rs.getString("username")!=null) {
 					
-					success = true;
+					isFinMan = rs.getBoolean("is_finance_manager");
 				}
 			}		
+			
+			connection.close();
 		}catch(SQLException e) {
-			success = false;
 			e.printStackTrace();		
 		}
-	return success;
+	return isFinMan;
 	}
 
+	@Override
+	public boolean isEmployee(String username) {
+		
+		boolean isEm = false;
+		
+		String sql = "SELECT * FROM employee where username = ?";
+		
+		try{
+			Connection connection = comm.connection();
+			
+			PreparedStatement ps = connection.prepareStatement(sql);
+	
+			ps.setString(1, username);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			rs.next();
+				
+			if (rs.getString("username").equals(username)) {
+					isEm = true;
+				}else {
+					System.out.println("User Does Not Exist");
+			}	
+			connection.close();
+		}catch(SQLException e) {
+			e.printStackTrace();		
+		}
+	return isEm;
+	}
 	
 }
