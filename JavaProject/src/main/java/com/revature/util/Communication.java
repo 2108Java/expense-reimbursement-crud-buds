@@ -11,10 +11,9 @@ public class Communication {
 	private static final String USERNAME = "postgres";
 	private static final String PASSWORD = "p4ssw0rd";
 	
+	
 	public Connection connection() throws SQLException {
-		Connection connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
-		
-		return connection;
+		return DriverManager.getConnection(URL,USERNAME,PASSWORD);
 	}
 	
 
