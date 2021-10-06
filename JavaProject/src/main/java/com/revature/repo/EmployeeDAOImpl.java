@@ -23,23 +23,26 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	
 	//READ
 	@Override
-	public Employee selectEmployeeByUsername(String username) {
+	public Employee selectEmployeeByUsername(Employee user){
 		
 		Employee em = new Employee();
 		
 		try(Connection connection = comm.connection()){
+			
 			String sql = "SELECT * FROM employee where username = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 	
-			ps.setString(1, username);
+			ps.setString(1, user.getUsername());
 			
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 		
 			em.setUsername(rs.getString("username"));
 			em.setPassword(rs.getString("password"));
+			em.setFinanceManager(rs.getBoolean("is_finance_manager"));
 				
 			connection.close();
+			
 		}catch(SQLException e) {
 			e.printStackTrace();		
 		}
@@ -47,50 +50,18 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 	}
 
 	@Override
-	public boolean isFinanceManager(String username) {
-		
-		boolean isFinMan = false;
-		
-		String sql = "SELECT * FROM employee where username = ? and is_finance_manager = ?";
-		try{
-			Connection connection = comm.connection();
-			
-			PreparedStatement ps = connection.prepareStatement(sql);
-	
-			ps.setString(1, username);
-			ps.setBoolean(2, true);
-			
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				if (rs.getString("username")!=null) {
-					
-					isFinMan = rs.getBoolean("is_finance_manager");
-				}
-			}		
-			
-			connection.close();
-		}catch(SQLException e) {
-			e.printStackTrace();		
-		}
-	return isFinMan;
-	}
-
-	@Override
 	public boolean isEmployee(String username) {
 		
 		boolean isEm = false;
 		
-		String sql = "SELECT * FROM employee where username = ?";
-		
-		try{
-			Connection connection = comm.connection();
+		try(Connection connection = comm.connection()){
 			
+			String sql = "SELECT * FROM employee where username = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 	
 			ps.setString(1, username);
 			
 			ResultSet rs = ps.executeQuery();
-			
 			rs.next();
 				
 			if (rs.getString("username").equals(username)) {

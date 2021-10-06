@@ -18,12 +18,15 @@ public class DummyMainMethod {
 		
 		String username = "Harley";
 		String password = "starfish";
-		Employee em = service.getEmployeeByUsername(username);
+		
+		Employee em = new Employee();
+		em.setUsername(username);
+		em.setPassword(password);
 		
 		Report report = new Report();
 	
 		
-		if(service.authenticateEmployee(username,password)) {
+		if(service.authenticateEmployee(em)) {
 			System.out.println("Logged in Harley");
 		}else {
 			System.out.println("Failed Log in");
@@ -31,7 +34,7 @@ public class DummyMainMethod {
 		
 		em.setUsername("Brandon");
 		
-		if(service.verifyManager(em.getUsername())) {
+		if(service.verifyManager(em)) {
 			System.out.println("Logged in Brandon");
 		}else {
 			System.out.println("Failed Log in");
