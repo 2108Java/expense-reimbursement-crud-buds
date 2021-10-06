@@ -3,12 +3,22 @@ package com.revature.controller;
 import java.io.IOException;
 
 import com.revature.models.Employee;
-
+import com.revature.repo.EmployeeDAO;
+import com.revature.repo.EmployeeDAOImpl;
+import com.revature.repo.ReportDAO;
+import com.revature.service.Service;
+import com.revature.service.ServiceImpl;
 
 import io.javalin.http.Context;
 
 public class AuthenticateController {
 
+	EmployeeDAO emDao = new EmployeeDAOImpl();
+	
+	ReportDAO reDao;
+	
+	Service serv = new ServiceImpl(emDao);
+	
 	public String authenticate(Context ctx) throws IOException {
 		Employee em = new Employee();
 		String username = ctx.formParam("username");
@@ -20,7 +30,7 @@ public class AuthenticateController {
 		System.out.println(ctx.formParam("username"));
 		System.out.println(ctx.formParam("password"));
 		String page = "";
-		if(em.getUsername().equals("user") && em.getPassword().equals("pass")){
+		if(serv.authenticateEmployee(ctx.formParam("username"), ctx.formParam("password"))){
 			ctx.sessionAttribute("user", em);
 			ctx.sessionAttribute("access","customer");
 
@@ -29,12 +39,7 @@ public class AuthenticateController {
 			
 			ctx.res.setStatus(401);
 		}
-		
-				
-				
 			
-				
-				
 //		if(service.authenticate(ctx.queryParam(username))) What we would do in a full stack. 
 		
 		return page;
