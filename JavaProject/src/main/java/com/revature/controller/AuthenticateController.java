@@ -30,7 +30,7 @@ public class AuthenticateController {
 		System.out.println(ctx.formParam("username"));
 		System.out.println(ctx.formParam("password"));
 		String page = "";
-		if(serv.authenticateEmployee(ctx.formParam("username"), ctx.formParam("password"))){
+		if(serv.authenticateEmployee(em)){
 			ctx.sessionAttribute("user", em);
 			ctx.sessionAttribute("access","customer");
 
