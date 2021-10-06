@@ -11,13 +11,13 @@ public interface Service {
 	public boolean verifyEmployeeExists(String username);
 	
 	//returns true if employee is a finance manger.
-	public boolean verifyManager(String username);
+	public boolean verifyManager(Employee user);
 	
 	//returns the Employee object associated with the username
-	public Employee getEmployeeByUsername(String username);
+	public Employee getEmployee(Employee user);
 	
 	//authenticate the user
-	public boolean authenticateEmployee(String username, String password);
+	public boolean authenticateEmployee(Employee user);
 	
 	
 	//Employee Services:

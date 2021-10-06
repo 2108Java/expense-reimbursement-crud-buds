@@ -17,22 +17,21 @@ public class ServiceImpl implements Service{
 	}
 	
 	@Override
-	public Employee getEmployeeByUsername(String username) {
-		return emDao.selectEmployeeByUsername(username);
+	public Employee getEmployee(Employee user) {
+		return emDao.selectEmployeeByUsername(user);
 	}
 	
 	@Override
-	public boolean authenticateEmployee(String username, String password){	
+	public boolean authenticateEmployee(Employee user){	
 		
-		boolean userExists = this.verifyEmployeeExists(username);
+		boolean userExists = this.verifyEmployeeExists(user.getUsername());
 		boolean authenticated = false;
 		
 		if(userExists) {
 			//System.out.println("User Exists");
-			Employee em = this.getEmployeeByUsername(username);
-			//System.out.println(un +" "+ pw);
+			Employee em = this.getEmployee(user);
 			
-			if(em.getPassword().equals(password)) {
+			if(em.getPassword().equals(user.getPassword())) {
 				authenticated = true;
 				System.out.println("Username & Password Match");
 			}else {
@@ -44,8 +43,16 @@ public class ServiceImpl implements Service{
 	}
 
 	@Override
-	public boolean verifyManager(String username) {
-		return emDao.isFinanceManager(username);
+	public boolean verifyManager(Employee user) {
+		boolean isFinMan = false;
+		
+		if(user.isFinanceManager()) {
+			isFinMan = true;
+		}else {
+			System.out.println("User is not a finance manager");
+		}
+		
+		return isFinMan;
 	}
 	
 	
