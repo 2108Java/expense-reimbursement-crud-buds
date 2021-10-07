@@ -51,16 +51,27 @@ public class UserController {
 		
 //		em = (Employee) JSON.parse(sess);
 		serv.getEmployeeReports(em);
-		System.out.println(em);
+//		System.out.println(em);
 		ctx.res.setStatus(200);
 		return em;
 	}
 	
 	public Employee addReport(Context ctx) {
+		Report rep = new Report();
 		
 		System.out.println(ctx.formParam("amount"));
 		System.out.println(ctx.formParam("description"));
 		System.out.println(ctx.formParam("type"));
+		
+		rep.setAmount(Float.parseFloat(ctx.formParam("amount")));
+		rep.setApprovalStatus("PENDING");
+		rep.setDescription(ctx.formParam("description"));
+		rep.setReportType(ctx.formParam("type"));
+		ReportList.add(rep);
+		em = ctx.cachedSessionAttribute("user");
+		em.setReportList(ReportList);
+		
+		System.out.println(em);
 		
 		return em;
 	}

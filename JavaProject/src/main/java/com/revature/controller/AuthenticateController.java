@@ -34,7 +34,7 @@ public class AuthenticateController {
 		em = serv.getEmployee(em);
 		if(em != null){
 			
-			System.out.println(em);
+//			System.out.println(em);
 			ctx.sessionAttribute("user", em);
 			ctx.sessionAttribute("access","customer");
 

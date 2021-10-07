@@ -12,7 +12,7 @@
    
         <div class = "jumbotron text-center">
 			
-            <h1>Employee View of Reimbursment Tickets <span class="text-end">
+            <h1>Employee View of Reimbursement Tickets <span class="text-end">
 				<form action="/logOut" method = "POST">
 				<input type="submit" id="logOut" class="btn btn-danger" value="Log Out">
 				</form>
@@ -22,18 +22,19 @@
     
     </div>
 </div>
-	
+
     <div class = "container">
         <div class = "text-center">
 			<div class="form-control">
-			<select name = "type">
-				<option selected>Select Reimbursiment Type</option>
-				<option name="Reimbursment" value="1">LODGING</option>
-				<option value="2">TRAVEL</option>
-				<option value="3">FOOD</option>
-				<option value="3">OTHER</option>
-			  </select>
-			<form action="/addReport" method = "POST">
+                <form action="/addReport" method = "POST">
+			        <select name = "type">
+				        <option selected>Select Reimbursement Type</option>
+				        <option value="LODGING">LODGING</option>
+				        <option value="TRAVEL">TRAVEL</option>
+				        <option value="FOOD">FOOD</option>
+				        <option value="OTHER">OTHER</option>
+			        </select>
+			
             <input type="text" name = "description"  placeholder="Enter Description" >
 			<input type="number" name = "amount"  placeholder="Enter amount" min = 1>
             
