@@ -31,11 +31,15 @@ public class AuthenticateController {
 		System.out.println(ctx.formParam("username"));
 		System.out.println(ctx.formParam("password"));
 		String page = "";
-		if(serv.authenticateEmployee(em) != null){
+		em = serv.getEmployee(em);
+		if(em != null){
+			
+			System.out.println(em);
 			ctx.sessionAttribute("user", em);
 			ctx.sessionAttribute("access","customer");
 
 			ctx.res.sendRedirect("http://localhost:8000/home");
+		
 		}else {
 			
 			ctx.res.setStatus(401);

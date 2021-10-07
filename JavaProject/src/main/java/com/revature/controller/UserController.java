@@ -18,6 +18,7 @@ import com.revature.service.ServiceImpl;
 import io.javalin.http.Context;
 
 public class UserController {
+	
 	EmployeeDAO emDao = new EmployeeDAOImpl();
 	
 	ReportDAO reDao = new ReportDAOImpl();
