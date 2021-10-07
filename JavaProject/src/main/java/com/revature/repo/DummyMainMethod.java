@@ -14,7 +14,7 @@ public class DummyMainMethod {
 		
 		ReportDAO database2 = new ReportDAOImpl();
 		
-		Service service = new ServiceImpl(database);
+		Service service = new ServiceImpl(database,database2);
 		
 		String username = "Harley";
 		String password = "starfish";
@@ -33,6 +33,8 @@ public class DummyMainMethod {
 		}
 		
 		em.setUsername("Brandon");
+		em.setEmployeeID(3);
+		em.setFinanceManager(true);
 		
 		if(service.verifyManager(em)) {
 			System.out.println("Logged in Brandon");
@@ -40,15 +42,19 @@ public class DummyMainMethod {
 			System.out.println("Failed Log in");
 		}
 		
-		report.setAmount(7000);
-		report.setDescription("Plane ticket for round trip to conference in Japan");
-		report.setReportType("TRAVEL");
+		report.setAmount(500);
+		report.setDescription("Car rental for during last business trip");
+		report.setReportType("OTHER");
 		
-		if(database2.insertReimbursement(em, report)) {
-			System.out.println("inserted into database");
-		}else {
-			System.out.println("not inserted into database");
-		}
+		//if(database2.insertReimbursement(em, report)) {
+		//	System.out.println("inserted into database");
+		//}else {
+		//	System.out.println("not inserted into database");
+		//}
+		
+		em = service.getEmployeeReports(em);
+		
+		System.out.println(em.getUsername()+"'s Report List : " + em.getReportList().toString());
 		
 	}
 

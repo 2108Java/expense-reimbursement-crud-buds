@@ -6,6 +6,7 @@ import com.revature.models.Employee;
 import com.revature.repo.EmployeeDAO;
 import com.revature.repo.EmployeeDAOImpl;
 import com.revature.repo.ReportDAO;
+import com.revature.repo.ReportDAOImpl;
 import com.revature.service.Service;
 import com.revature.service.ServiceImpl;
 
@@ -15,9 +16,9 @@ public class AuthenticateController {
 
 	EmployeeDAO emDao = new EmployeeDAOImpl();
 	
-	ReportDAO reDao;
+	ReportDAO reDao = new ReportDAOImpl();
 	
-	Service serv = new ServiceImpl(emDao);
+	Service serv = new ServiceImpl(emDao,reDao);
 	
 	public String authenticate(Context ctx) throws IOException {
 		Employee em = new Employee();

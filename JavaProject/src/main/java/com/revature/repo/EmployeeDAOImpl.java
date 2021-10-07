@@ -40,6 +40,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 			em.setUsername(rs.getString("username"));
 			em.setPassword(rs.getString("password"));
 			em.setFinanceManager(rs.getBoolean("is_finance_manager"));
+			em.setEmployeeID(rs.getInt("employee_id"));
 				
 			connection.close();
 			

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.models.Employee;
@@ -11,7 +12,7 @@ import com.revature.models.Report;
 import com.revature.util.Communication;
 
 public class ReportDAOImpl implements ReportDAO{
-	Communication conn = new Communication();
+	Communication comm = new Communication();
 	
 	
 	@Override
@@ -20,7 +21,7 @@ public class ReportDAOImpl implements ReportDAO{
 		
 		String sql = "insert into expense_reports (employee_id, expense_type, description,  amount) values ((select employee_id from employee where username = ? ),?,?,?)";
 		try{
-			Connection connection = conn.connection();
+			Connection connection = comm.connection();
 			
 			PreparedStatement ps = connection.prepareStatement(sql);
 	
@@ -32,7 +33,7 @@ public class ReportDAOImpl implements ReportDAO{
 			ps.execute();
 			
 					
-					success = true;
+			success = true;
 					
 		}catch(SQLException e) {
 			success = false;
@@ -42,9 +43,41 @@ public class ReportDAOImpl implements ReportDAO{
 	}
 
 	@Override
-	public List<Report> selectAllReimbursements() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public List<Report> selectEmployeeReimbursements(int employeeId) {
+		
+		List<Report> reportList = new ArrayList<Report>();
+		
+		try(Connection connection = comm.connection()){
+		
+		String sql = "SELECT * FROM expense_reports where employee_id = ? order by creation_time asc";
+		PreparedStatement ps = connection.prepareStatement(sql);
+		
+		ps.setInt(1, employeeId);
+		ps.execute();
+		
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			Report tempReport = new Report();
+			
+			tempReport.setReportId(rs.getInt("report_id"));
+			tempReport.setAmount(rs.getInt("amount"));
+			tempReport.setReportType(rs.getString("expense_type"));
+			tempReport.setDescription(rs.getString("description"));
+			tempReport.setApprovalStatus(rs.getString("approval_status"));
+			tempReport.setTimestamp(rs.getString("creation_time"));
+			
+			reportList.add(tempReport);
+			
+		}
+		connection.close();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	return reportList;
 	}
 
 	@Override
@@ -66,7 +99,7 @@ public class ReportDAOImpl implements ReportDAO{
 	}
 
 	@Override
-	public List<Report> selectEmployeeReimbursements() {
+	public List<Report>  selectAllReimbursements() {
 		// TODO Auto-generated method stub
 		return null;
 	}
