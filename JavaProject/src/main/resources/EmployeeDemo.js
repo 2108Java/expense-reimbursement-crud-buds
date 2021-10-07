@@ -1,7 +1,7 @@
 console.log("Hello");
 
 
-function getPlanet(){ //getting a single planet
+function getReport(){ //getting a single report
 
 	let planetId = document.getElementById("planetId").value;
 	
@@ -27,33 +27,39 @@ function getPlanet(){ //getting a single planet
 	
 }
 
-function getAllPlanets(){ //getting all the planets
+function getAllReports(){ //getting all the reimbursement tickets
 	
-	
-
 	let planetsUrl = "http://localhost:8000/reports";
+
+	fetch(planetsUrl).then(function(response) {
+  		response.json().then(function(users){	
+			console.log(users);
+			console.log(users.reportList[1].reportId);
+			addAllPlanets(users);
+  		});
+	}).catch(err => console.error(err));
 	
-	let xhttp = new XMLHttpRequest();
+	// let xhttp = new XMLHttpRequest();
 	
-	xhttp.onreadystatechange = function (){ 
-		//fat arrow notation does not support "this" keyword
+	// xhttp.onreadystatechange = function (){ 
+	// 	//fat arrow notation does not support "this" keyword
 		
-		// console.log(this.readyState);
+	// 	// console.log(this.readyState);
 		
-		if(this.readyState == 4 && this.status == 200){
+	// 	if(this.readyState == 4 && this.status == 200){
 			
 			
-            let user = JSON.parse(this.responseText);
+    //         let user = JSON.parse(this.responseText);
 			
-            console.log(user);
-            console.log(user.reportList[1].reportId);
-			 addAllPlanets(user);
-		}
-	}
+    //         console.log(user);
+    //         console.log(user.reportList[1].reportId);
+	// 		 addAllPlanets(user);
+	// 	}
+	// }
 	
-	xhttp.open("GET",planetsUrl);
+	// xhttp.open("GET",planetsUrl);
 	
-	xhttp.send();
+	// xhttp.send();
 	
 }
 
@@ -62,7 +68,7 @@ function getAllPlanets(){ //getting all the planets
 
 window.onload = function(){
 
-	getAllPlanets();
+	getAllReports();
 	
 //This functions get invoked when the page is loaded in!
 }

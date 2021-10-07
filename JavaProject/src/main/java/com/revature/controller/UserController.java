@@ -38,5 +38,14 @@ public class UserController {
 		ctx.res.setStatus(200);
 		return em;
 	}
+	
+	public Employee addReport(Context ctx) {
+		
+		System.out.println(ctx.formParam("amount"));
+		System.out.println(ctx.formParam("description"));
+		System.out.println(ctx.formParam("type"));
+		
+		return em;
+	}
 
 }

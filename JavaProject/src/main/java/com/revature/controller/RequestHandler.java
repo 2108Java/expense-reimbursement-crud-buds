@@ -60,6 +60,10 @@ public class RequestHandler {
 			 //localhost:8000/planets is going to return planets
 		});
 		
+		app.post("/addReport", ctx ->{
+			uc.addReport(ctx);
+			ctx.redirect("http://localhost:8000/home");
+		});
 		
 		app.post("/logOut", ctx -> {
 			ctx.consumeSessionAttribute("user");
