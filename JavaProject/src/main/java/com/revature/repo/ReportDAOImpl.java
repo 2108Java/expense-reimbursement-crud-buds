@@ -125,8 +125,28 @@ public class ReportDAOImpl implements ReportDAO{
 
 	@Override
 	public boolean updateReimbursement(Report report) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean success = false;
+		int id = report.getReportId();
+		String newStatus = report.getApprovalStatus();
+		
+		try(Connection connection = comm.connection()){
+			
+			String sql = "UPDATE expense_reports SET approval_status = ? WHERE report_id = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			
+			ps.setString(1 ,newStatus);
+			ps.setInt(2 ,id);
+			ps.execute();
+			
+			success = true;
+			
+			connection.close();
+				
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+
+		return success;
 	}
 
 }
