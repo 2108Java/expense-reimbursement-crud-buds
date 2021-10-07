@@ -17,8 +17,6 @@ public class Report {
 		super();
 	}
 
-	
-	
 	//Getters and Setters
 	
 	public Report(int reportId, float amount, String reportType, String description, String timestamp,
@@ -31,8 +29,6 @@ public class Report {
 		this.timestamp = timestamp;
 		this.approvalStatus = approvalStatus;
 	}
-
-
 
 	public int getReportId() {
 		return reportId;

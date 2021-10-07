@@ -54,7 +54,9 @@ public class DummyMainMethod {
 		
 		em = service.getEmployeeReports(em);
 		
-		System.out.println(em.getUsername()+"'s Report List : " + em.getReportList().toString());
+		Employee newEmp = service.getEmployee(em); 
+		
+		//System.out.println(em.getUsername()+"'s Report List : " + em.getReportList().toString());
 		
 	}
 

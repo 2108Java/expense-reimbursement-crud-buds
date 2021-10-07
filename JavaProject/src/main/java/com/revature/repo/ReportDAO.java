@@ -30,9 +30,6 @@ public interface ReportDAO {
 	
 	public boolean updateReimbursement(Report report);
 	
-	
-	
-	
 	//DELETE
 
 }
