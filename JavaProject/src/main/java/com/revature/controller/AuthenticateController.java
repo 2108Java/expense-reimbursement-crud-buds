@@ -31,7 +31,7 @@ public class AuthenticateController {
 		System.out.println(ctx.formParam("username"));
 		System.out.println(ctx.formParam("password"));
 		String page = "";
-		if(serv.authenticateEmployee(em)){
+		if(serv.authenticateEmployee(em) != null){
 			ctx.sessionAttribute("user", em);
 			ctx.sessionAttribute("access","customer");
 

@@ -21,7 +21,7 @@ public class RequestHandler {
 		
 		AuthenticateController ac = new AuthenticateController();
 		UserController uc = new UserController();
-		uc.initalizeList();
+//		uc.initalizeList();
 		
 		app.get("/loginPage", 
 				ctx -> 
