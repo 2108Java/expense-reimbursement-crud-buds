@@ -68,6 +68,13 @@ public class Employee {
 	public void setReportList(List<Report> reportList) {
 		this.reportList = reportList;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Employee [employeeID=" + employeeID + ", username=" + username + ", password=" + password
+				+ ", isFinanceManager=" + isFinanceManager + ", reportList=" + reportList + "]";
+	}
 	
 	
 	

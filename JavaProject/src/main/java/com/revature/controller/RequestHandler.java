@@ -20,6 +20,8 @@ public class RequestHandler {
 	public static void setupEndPoints(Javalin app) {
 		
 		AuthenticateController ac = new AuthenticateController();
+		UserController uc = new UserController();
+		uc.initalizeList();
 		
 		app.get("/loginPage", 
 				ctx -> 
@@ -41,17 +43,29 @@ public class RequestHandler {
 		
 		app.get("/home", ctx -> 
 		{
-			if(checkSession(ctx)) {
+//			if(checkSession(ctx)) {
 				ctx.req.getRequestDispatcher("EmployeePage.html").forward(ctx.req, ctx.res);
-			}else {
-				ctx.res.sendRedirect("http://localhost:8000/");
-			}
+//			}else {
+//				ctx.res.sendRedirect("http://localhost:8000/");
+//			}
 		
 		
 		});
 		
+		app.get("/reports", ctx -> {
+			
+//			if(checkSession(ctx)) {
+				ctx.json(uc.getAllReports(ctx));
+//			}
+			 //localhost:8000/planets is going to return planets
+		});
 		
 		
+		app.post("/logOut", ctx -> {
+			ctx.consumeSessionAttribute("user");
+			ctx.consumeSessionAttribute("access");
+			ctx.redirect("http://localhost:8000/");
+			});
 	}
 
 }
