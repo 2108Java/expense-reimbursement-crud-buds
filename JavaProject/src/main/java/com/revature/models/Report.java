@@ -20,6 +20,19 @@ public class Report {
 	
 	//Getters and Setters
 	
+	public Report(int reportId, float amount, String reportType, String description, String timestamp,
+			String approvalStatus) {
+		super();
+		this.reportId = reportId;
+		this.amount = amount;
+		this.reportType = reportType;
+		this.description = description;
+		this.timestamp = timestamp;
+		this.approvalStatus = approvalStatus;
+	}
+
+
+
 	public int getReportId() {
 		return reportId;
 	}
@@ -55,6 +68,14 @@ public class Report {
 	}
 	public void setApprovalStatus(String approvalStatus) {
 		this.approvalStatus = approvalStatus;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Report [reportId=" + reportId + ", amount=" + amount + ", reportType=" + reportType + ", description="
+				+ description + ", timestamp=" + timestamp + ", approvalStatus=" + approvalStatus + "]";
 	}
 
 }
