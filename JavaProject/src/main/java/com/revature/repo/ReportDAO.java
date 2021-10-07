@@ -21,11 +21,7 @@ public interface ReportDAO {
 	public List<Report> selectAllReimbursements();
 	
 	
-	public List<Report> selectApprovedReimbursements();
-	
-	public List<Report> selectRejectedReimbursements();
-	
-	public List<Report> selectPendingReimbursements();
+	public List<Report> selectReimbursementsByType(String reimbursementType);
 	
 	public List<Report> selectEmployeeReimbursements(int employeeId);
 	
