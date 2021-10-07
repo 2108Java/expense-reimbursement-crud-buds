@@ -69,7 +69,7 @@ public class UserController {
 		rep.setReportType(ctx.formParam("type"));
 		ReportList.add(rep);
 		em = ctx.cachedSessionAttribute("user");
-		em.setReportList(ReportList);
+//		em.setReportList(ReportList);
 		
 		System.out.println(em);
 		
