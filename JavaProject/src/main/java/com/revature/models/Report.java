@@ -9,6 +9,7 @@ public class Report {
 	private String description;
 	private String timestamp;
 	private String approvalStatus;
+	private String employeeName;
 	
 	//Constructors
 	
@@ -69,7 +70,14 @@ public class Report {
 	public void setApprovalStatus(String approvalStatus) {
 		this.approvalStatus = approvalStatus;
 	}
+	
+	public String getEmployeeName() {
+		return employeeName;
+	}
 
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
 	
 	@Override
 	public String toString() {

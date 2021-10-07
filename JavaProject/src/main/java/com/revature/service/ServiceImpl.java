@@ -73,6 +73,11 @@ public class ServiceImpl implements Service{
 		
 		return user;
 	}
+
+	@Override
+	public List<Report> getReimbursementsByType(String reimbursementType) {
+		return reDao.selectReimbursementsByType(reimbursementType);
+	}
 	
 	
 }
