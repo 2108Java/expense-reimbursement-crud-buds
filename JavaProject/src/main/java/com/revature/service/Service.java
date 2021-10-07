@@ -1,6 +1,9 @@
 package com.revature.service;
 
+import java.util.List;
+
 import com.revature.models.Employee;
+import com.revature.models.Report;
 
 public interface Service {
 	
@@ -26,6 +29,8 @@ public interface Service {
 	//public boolean submitReport(Employee emp);
 	
 	public Employee getEmployeeReports(Employee user);
+	
+	public List<Report> getReimbursementsByType(String reimbursementType);
 	
 	
 }

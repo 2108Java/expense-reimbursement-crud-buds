@@ -31,7 +31,6 @@ public class ReportDAOImpl implements ReportDAO{
 			ps.setDouble(4, report.getAmount());
 			
 			ps.execute();
-			
 					
 			success = true;
 					
@@ -81,21 +80,41 @@ public class ReportDAOImpl implements ReportDAO{
 	}
 
 	@Override
-	public List<Report> selectApprovedReimbursements() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Report> selectRejectedReimbursements() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Report> selectPendingReimbursements() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Report> selectReimbursementsByType(String reimbursementType) {
+		
+		List<Report> reportList = new ArrayList<Report>();
+		
+		try(Connection connection = comm.connection()){
+		
+		String sql = "SELECT * FROM expense_reports LEFT JOIN employee ON expense_reports.employee_id = employee.employee_id WHERE expense_type = ? ORDER BY creation_time ASC";
+		PreparedStatement ps = connection.prepareStatement(sql);
+		
+		ps.setString(1 ,reimbursementType);
+		ps.execute();
+		
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			Report tempReport = new Report();
+			
+			tempReport.setReportId(rs.getInt("report_id"));
+			tempReport.setAmount(rs.getInt("amount"));
+			tempReport.setReportType(rs.getString("expense_type"));
+			tempReport.setDescription(rs.getString("description"));
+			tempReport.setApprovalStatus(rs.getString("approval_status"));
+			tempReport.setEmployeeName(rs.getString("username"));
+			tempReport.setTimestamp(rs.getString("creation_time"));
+			
+			reportList.add(tempReport);
+			
+		}
+		connection.close();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	return reportList;
 	}
 
 	@Override
