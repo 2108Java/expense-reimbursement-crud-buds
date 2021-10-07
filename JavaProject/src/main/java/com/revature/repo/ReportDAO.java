@@ -27,7 +27,7 @@ public interface ReportDAO {
 	
 	public List<Report> selectPendingReimbursements();
 	
-	public List<Report> selectEmployeeReimbursements();
+	public List<Report> selectEmployeeReimbursements(int employeeId);
 	
 	
 	//UPDATE

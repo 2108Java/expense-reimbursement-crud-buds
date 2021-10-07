@@ -1,14 +1,21 @@
 package com.revature.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.revature.models.Employee;
+import com.revature.models.Report;
 import com.revature.repo.EmployeeDAO;
+import com.revature.repo.ReportDAO;
 
 public class ServiceImpl implements Service{
 
 	private EmployeeDAO emDao;
+	private ReportDAO reDao;
 	
-	public ServiceImpl(EmployeeDAO emDao) {
+	public ServiceImpl(EmployeeDAO emDao, ReportDAO reDao) {
 		this.emDao = emDao;
+		this.reDao = reDao;
 	}
 	
 	@Override
@@ -44,6 +51,7 @@ public class ServiceImpl implements Service{
 
 	@Override
 	public boolean verifyManager(Employee user) {
+		
 		boolean isFinMan = false;
 		
 		if(user.isFinanceManager()) {
@@ -53,6 +61,17 @@ public class ServiceImpl implements Service{
 		}
 		
 		return isFinMan;
+	}
+
+	
+	@Override
+	public Employee getEmployeeReports(Employee user) {
+		
+		List<Report> reportList = new ArrayList<>(reDao.selectEmployeeReimbursements(user.getEmployeeID()));
+		
+		user.setReportList(reportList);
+		
+		return user;
 	}
 	
 	

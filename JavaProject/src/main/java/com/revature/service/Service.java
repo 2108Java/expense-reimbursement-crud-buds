@@ -25,5 +25,7 @@ public interface Service {
 	
 	//public boolean submitReport(Employee emp);
 	
+	public Employee getEmployeeReports(Employee user);
+	
 	
 }

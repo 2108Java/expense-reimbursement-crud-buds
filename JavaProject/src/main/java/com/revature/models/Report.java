@@ -57,4 +57,9 @@ public class Report {
 		this.approvalStatus = approvalStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "\nReport [reportId=" + reportId + ", amount=" + amount + ", reportType=" + reportType + ", description="
+				+ description + ", timestamp=" + timestamp + ", approvalStatus=" + approvalStatus + "]";
+	}
 }
