@@ -7,10 +7,25 @@ import org.eclipse.jetty.server.Authentication.User;
 
 import com.revature.models.Employee;
 import com.revature.models.Report;
+import com.revature.repo.EmployeeDAO;
+import com.revature.repo.EmployeeDAOImpl;
+import com.revature.repo.ReportDAO;
+import com.revature.repo.ReportDAOImpl;
+import com.revature.service.Service;
+import com.revature.service.ServiceImpl;
 
 import io.javalin.http.Context;
 
 public class UserController {
+	
+	private EmployeeDAO emDao = new EmployeeDAOImpl();
+	private ReportDAO reDao = new ReportDAOImpl();
+	private Service service = new ServiceImpl(emDao,reDao);
+	
+	public UserController(Service service) {
+		super();
+		this.service = service;
+	}
 	
 	Employee em = new Employee();
 	List<Report> ReportList = new ArrayList<>();
@@ -33,18 +48,40 @@ public class UserController {
 	}
 
 	public Employee getAllReports(Context ctx) {
+		ctx.sessionAttribute("user");
 		
+		em = ctx.cachedSessionAttribute("user");
+		em = service.getEmployeeReports(em);
 		
+		//em = (Employee) JSON.parse(sess);
 		ctx.res.setStatus(200);
 		return em;
 	}
 	
 	public Employee addReport(Context ctx) {
+		em = ctx.cachedSessionAttribute("user");
+		Report rep = new Report();
 		
-		System.out.println(ctx.formParam("amount"));
-		System.out.println(ctx.formParam("description"));
-		System.out.println(ctx.formParam("type"));
+		//System.out.println(ctx.formParam("amount"));
+		//System.out.println(ctx.formParam("description"));
+		//System.out.println(ctx.formParam("type"));
+		//ReportList.add(rep);
 		
+		rep.setAmount(Float.parseFloat(ctx.formParam("amount")));
+		rep.setDescription(ctx.formParam("description"));
+		rep.setReportType(ctx.formParam("type"));
+		rep.setEmployeeName(em.getUsername());
+		
+		System.out.println(rep.toString());
+		System.out.println(rep.getEmployeeName());
+		
+		if (service.insertEmployeeReport(rep)) {
+			ctx.res.setStatus(200);
+		}else {
+			ctx.res.setStatus(400);
+		}
+		
+
 		return em;
 	}
 

@@ -26,17 +26,17 @@
     <div class = "container">
         <div class = "text-center">
 			<div class="form-control">
-			<select name = "type">
-				<option selected>Select Reimbursiment Type</option>
-				<option name="Reimbursment" value="1">LODGING</option>
-				<option value="2">TRAVEL</option>
-				<option value="3">FOOD</option>
-				<option value="3">OTHER</option>
-			  </select>
+
 			<form action="/addReport" method = "POST">
             <input type="text" name = "description"  placeholder="Enter Description" >
 			<input type="number" name = "amount"  placeholder="Enter amount" min = 1>
-            
+            <select name = "type">
+				<option selected>Select Reimbursiment Type</option>
+				<option name="Reimbursment" value="LODGING">LODGING</option>
+				<option value="TRAVEL">TRAVEL</option>
+				<option value="FOOD">FOOD</option>
+				<option value="OTHER">OTHER</option>
+			  </select>
             <input type="submit" id="reportSubmit" class="btn btn-success">
             </form>
             

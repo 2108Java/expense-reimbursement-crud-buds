@@ -42,9 +42,12 @@ public class DummyMainMethod {
 			System.out.println("Failed Log in");
 		}
 		
-		report.setAmount(500);
-		report.setDescription("Car rental for during last business trip");
+		report.setAmount(1008);
+		report.setDescription("Bought a new laptop");
 		report.setReportType("OTHER");
+		report.setEmployeeName("Harley");
+		
+		//service.insertEmployeeReport(report);
 		
 		//if(database2.insertReimbursement(em, report)) {
 		//	System.out.println("inserted into database");
@@ -52,11 +55,12 @@ public class DummyMainMethod {
 		//	System.out.println("not inserted into database");
 		//}
 		
-		em = service.getEmployeeReports(em);
+		//em = service.getEmployeeReports(em);
 		
-		Employee newEmp = service.getEmployee(em); 
+		//Employee newEmp = service.getEmployee(em); 
 		
 		//System.out.println(em.getUsername()+"'s Report List : " + em.getReportList().toString());
+		
 		
 	}
 
