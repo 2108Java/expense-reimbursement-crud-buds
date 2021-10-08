@@ -18,6 +18,7 @@ public class ServiceImpl implements Service{
 		this.reDao = reDao;
 	}
 	
+	//Authenticate:
 	@Override
 	public boolean verifyEmployeeExists(String username) {			
 		return emDao.isEmployee(username); 
@@ -63,11 +64,11 @@ public class ServiceImpl implements Service{
 		return isFinMan;
 	}
 
-	
+	//Employee Services:
 	@Override
 	public Employee getEmployeeReports(Employee user) {
 		
-		List<Report> reportList = new ArrayList<>(reDao.selectEmployeeReimbursements(user.getEmployeeID()));
+		List<Report> reportList = new ArrayList<>(reDao.selectEmployeeReports(user.getEmployeeID()));
 		
 		user.setReportList(reportList);
 		
@@ -75,21 +76,25 @@ public class ServiceImpl implements Service{
 	}
 
 	@Override
-	public List<Report> getReimbursementsByType(String reimbursementType) {
-		return reDao.selectReimbursementsByType(reimbursementType);
+	public boolean createEmployeeReport(Report newReport) {
+		return reDao.insertReport(newReport);
+	}
+
+
+	//Manager Services:
+	@Override
+	public List<Report> getAllReports() {
+		return reDao.selectAllReports();
 	}
 
 	@Override
-	public boolean insertEmployeeReport(Report newReport) {
-		boolean success = false;
-		if(reDao.insertReimbursement(newReport)) {
-			success = true;
-			System.out.println("Report successfull added");
-		}else {
-			System.out.println("Report failed to add");
-		}
-		return success;
+	public List<Report> getReportsByType(String reimbursementType) {
+		return reDao.selectReportsByType(reimbursementType);
 	}
-	
+
+	@Override
+	public boolean updateReportStatus(Report report) {
+		return reDao.updateReport(report);
+	}
 	
 }

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.revature.models.Employee;
 import com.revature.models.Report;
 import com.revature.util.Communication;
 
@@ -16,7 +15,7 @@ public class ReportDAOImpl implements ReportDAO{
 	
 	
 	@Override
-	public boolean insertReimbursement(Report report) {
+	public boolean insertReport(Report report) {
 		boolean success = false;
 		
 		String sql = "insert into expense_reports (employee_id, expense_type, description,  amount) values ((select employee_id from employee where username = ? ),?,?,?)";
@@ -43,7 +42,7 @@ public class ReportDAOImpl implements ReportDAO{
 
 	@Override
 	
-	public List<Report> selectEmployeeReimbursements(int employeeId) {
+	public List<Report> selectEmployeeReports(int employeeId) {
 		
 		List<Report> reportList = new ArrayList<Report>();
 		
@@ -80,7 +79,7 @@ public class ReportDAOImpl implements ReportDAO{
 	}
 
 	@Override
-	public List<Report> selectReimbursementsByType(String reimbursementType) {
+	public List<Report> selectReportsByType(String reimbursementType) {
 		
 		List<Report> reportList = new ArrayList<Report>();
 		
@@ -118,13 +117,45 @@ public class ReportDAOImpl implements ReportDAO{
 	}
 
 	@Override
-	public List<Report>  selectAllReimbursements() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Report>  selectAllReports() {
+		
+		List<Report> reportList = new ArrayList<Report>();
+		
+		try(Connection connection = comm.connection()){
+		
+		String sql = "SELECT * FROM expense_reports LEFT JOIN employee ON expense_reports.employee_id = employee.employee_id ORDER BY creation_time ASC";
+		PreparedStatement ps = connection.prepareStatement(sql);
+		
+		ps.execute();
+		
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			Report tempReport = new Report();
+			
+			tempReport.setReportId(rs.getInt("report_id"));
+			tempReport.setAmount(rs.getInt("amount"));
+			tempReport.setReportType(rs.getString("expense_type"));
+			tempReport.setDescription(rs.getString("description"));
+			tempReport.setApprovalStatus(rs.getString("approval_status"));
+			tempReport.setEmployeeName(rs.getString("username"));
+			tempReport.setTimestamp(rs.getString("creation_time"));
+			
+			reportList.add(tempReport);
+			
+		}
+		connection.close();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	return reportList;
 	}
 
+
 	@Override
-	public boolean updateReimbursement(Report report) {
+	public boolean updateReport(Report report) {
 		boolean success = false;
 		int id = report.getReportId();
 		String newStatus = report.getApprovalStatus();

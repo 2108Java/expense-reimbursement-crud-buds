@@ -25,14 +25,22 @@ public interface Service {
 	
 	//Employee Services:
 	
-	
-	//public boolean submitReport(Employee emp);
-	
+	//get all reports associated with user. Report List is added to the employee object
 	public Employee getEmployeeReports(Employee user);
 	
-	public List<Report> getReimbursementsByType(String reimbursementType);
+	//New report is added to the DB and will return true if successful
+	public boolean createEmployeeReport(Report newReport);
 	
-	public boolean insertEmployeeReport(Report newReport);
 	
+	//Manager Services:
+	
+	//Returns a list of all reports from DB
+	public List<Report> getAllReports();
+	
+	//Returns a list of all reports with the given type from DB
+	public List<Report> getReportsByType(String reimbursementType);
+	
+	//Updates the report status from pending to "Approved" or "Denied" in DB. Returns true if successful
+	public boolean updateReportStatus(Report report);
 	
 }

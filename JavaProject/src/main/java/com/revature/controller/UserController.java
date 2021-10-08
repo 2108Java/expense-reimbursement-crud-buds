@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jetty.server.Authentication.User;
-import org.eclipse.jetty.util.ajax.JSON;
 
 import com.revature.models.Employee;
 import com.revature.models.Report;
@@ -19,7 +18,6 @@ import io.javalin.http.Context;
 
 public class UserController {
 	
-  
 	private EmployeeDAO emDao = new EmployeeDAOImpl();
 	private ReportDAO reDao = new ReportDAOImpl();
 	private Service service = new ServiceImpl(emDao,reDao);
@@ -28,12 +26,13 @@ public class UserController {
 		super();
 		this.service = service;
 	}
-
 	
 	Employee em = new Employee();
 	List<Report> ReportList = new ArrayList<>();
 	public Employee initalizeList() {
-	
+		
+		
+		
 		ReportList.add(0, new Report(1, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
 		ReportList.add(1, new Report(2, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
 		ReportList.add(2, new Report(3, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
@@ -50,14 +49,11 @@ public class UserController {
 
 	public Employee getAllReports(Context ctx) {
 		ctx.sessionAttribute("user");
-    
+		
 		em = ctx.cachedSessionAttribute("user");
 		em = service.getEmployeeReports(em);
 		
-//		em = (Employee) JSON.parse(sess);
-//		service.getEmployeeReports(em);
-//		System.out.println(em);
-
+		//em = (Employee) JSON.parse(sess);
 		ctx.res.setStatus(200);
 		return em;
 	}
@@ -70,16 +66,16 @@ public class UserController {
 		//System.out.println(ctx.formParam("description"));
 		//System.out.println(ctx.formParam("type"));
 		//ReportList.add(rep);
-
+		
 		rep.setAmount(Float.parseFloat(ctx.formParam("amount")));
 		rep.setDescription(ctx.formParam("description"));
 		rep.setReportType(ctx.formParam("type"));
 		rep.setEmployeeName(em.getUsername());
 		
-		System.out.println(rep.toString());
-		System.out.println(rep.getEmployeeName());
+		//System.out.println(rep.toString());
+		//System.out.println(rep.getEmployeeName());
 		
-		if (service.insertEmployeeReport(rep)) {
+		if (service.createEmployeeReport(rep)) {
 			ctx.res.setStatus(200);
 		}else {
 			ctx.res.setStatus(400);
