@@ -12,11 +12,11 @@
    
         <div class = "jumbotron text-center">
 			
-            <h1>Employee View of Reimbursement Tickets <span class="text-end">
-				<form action="/logOut" method = "POST">
+            <h1>Employee View of Reimbursement Tickets </h1>
+				<form action="/logOut" method = "POST" class="text-end">
 				<input type="submit" id="logOut" class="btn btn-danger" value="Log Out">
 				</form>
-			</span></h1>
+			
 
             <!-- <span>Using the Planets api</span> -->
     
@@ -27,15 +27,17 @@
         <div class = "text-center">
 			<div class="form-control">
 
-            <input type="text" name = "description"  placeholder="Enter Description" >
-			<input type="number" name = "amount"  placeholder="Enter amount" min = 1>
-            <select name = "type">
+			<form action="/addReport" method="post">
+			<select name = "type">
 				<option selected>Select Reimbursiment Type</option>
 				<option name="Reimbursment" value="LODGING">LODGING</option>
 				<option value="TRAVEL">TRAVEL</option>
 				<option value="FOOD">FOOD</option>
 				<option value="OTHER">OTHER</option>
 			  </select>
+            <input type="text" name = "description"  placeholder="Enter Description" >
+			<input type="number" name = "amount"  placeholder="Enter amount" min = 1>
+            
             <input type="submit" id="reportSubmit" class="btn btn-success">
             </form>
             

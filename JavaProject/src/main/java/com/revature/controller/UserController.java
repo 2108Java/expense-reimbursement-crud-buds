@@ -55,7 +55,7 @@ public class UserController {
 		em = service.getEmployeeReports(em);
 		
 //		em = (Employee) JSON.parse(sess);
-		serv.getEmployeeReports(em);
+//		service.getEmployeeReports(em);
 //		System.out.println(em);
 
 		ctx.res.setStatus(200);
