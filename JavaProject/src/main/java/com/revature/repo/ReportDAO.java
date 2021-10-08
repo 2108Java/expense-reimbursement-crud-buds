@@ -2,7 +2,6 @@ package com.revature.repo;
 
 import java.util.List;
 
-import com.revature.models.Employee;
 import com.revature.models.Report;
 
 public interface ReportDAO {
@@ -10,25 +9,20 @@ public interface ReportDAO {
 	
 	//CREATE
 	
-	public boolean insertReimbursement(Report report);
-	
-	
-	
-	
+	public boolean insertReport(Report report);
 	
 	//READ
 	
-	public List<Report> selectAllReimbursements();
+	public List<Report> selectAllReports();
 	
+	public List<Report> selectReportsByType(String reimbursementType);
 	
-	public List<Report> selectReimbursementsByType(String reimbursementType);
-	
-	public List<Report> selectEmployeeReimbursements(int employeeId);
+	public List<Report> selectEmployeeReports(int employeeId);
 	
 	
 	//UPDATE
 	
-	public boolean updateReimbursement(Report report);
+	public boolean updateReport(Report report);
 	
 	//DELETE
 

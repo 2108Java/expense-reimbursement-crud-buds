@@ -59,8 +59,12 @@ public class DummyMainMethod {
 		
 		//Employee newEmp = service.getEmployee(em); 
 		
-		//System.out.println(em.getUsername()+"'s Report List : " + em.getReportList().toString());
+		//System.out.println(em.getUsername()+"'s Report List : " + service.getAllReimbursements().toString());
+		//System.out.println("Travel Report List : " + service.getReimbursementsByType("TRAVEL").toString());
 		
+		//report.setReportId(10);
+		//report.setApprovalStatus("Approved");
+		//service.updateReportStatus(report);
 		
 	}
 
