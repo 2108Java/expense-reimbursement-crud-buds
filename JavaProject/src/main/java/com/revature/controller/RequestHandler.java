@@ -28,6 +28,13 @@ public class RequestHandler {
 		UserController uc = new UserController(service);
 		//uc.initalizeList();
 		
+		app.get("/loginPage", 
+				ctx -> 
+		ctx.req.getRequestDispatcher("Login.html").forward(ctx.req, ctx.res)
+				);
+		
+
+		
 		//The first thing the user is going to see is the login page!
 		app.get("/", ctx -> {
 			

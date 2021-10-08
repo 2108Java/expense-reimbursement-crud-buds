@@ -35,14 +35,16 @@ public class AuthenticateController {
 		System.out.println(ctx.formParam("username"));
 		System.out.println(ctx.formParam("password"));
 		String page = "";
-		
+	
 		if(service.authenticateEmployee(em)){
 			em = service.getEmployee(em);
 			
+
 			ctx.sessionAttribute("user", em);
 			ctx.sessionAttribute("access","customer");
 		
 			ctx.res.sendRedirect("http://localhost:8000/home");
+		
 		}else {
 	
 			ctx.res.setStatus(401);
