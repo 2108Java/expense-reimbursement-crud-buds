@@ -10,7 +10,7 @@ public interface ReportDAO {
 	
 	//CREATE
 	
-	public boolean insertReimbursement(Employee em, Report report);
+	public boolean insertReimbursement(Report report);
 	
 	
 	

@@ -14,11 +14,15 @@ import io.javalin.http.Context;
 
 public class AuthenticateController {
 
-	EmployeeDAO emDao = new EmployeeDAOImpl();
+	private EmployeeDAO emDao = new EmployeeDAOImpl();
+	private ReportDAO reDao = new ReportDAOImpl();
+	private Service service = new ServiceImpl(emDao,reDao);
 	
-	ReportDAO reDao = new ReportDAOImpl();
+	public AuthenticateController(Service service) {
+		super();
+		this.service = service;
+	}
 	
-	Service serv = new ServiceImpl(emDao,reDao);
 	
 	public String authenticate(Context ctx) throws IOException {
 		Employee em = new Employee();
@@ -31,17 +35,18 @@ public class AuthenticateController {
 		System.out.println(ctx.formParam("username"));
 		System.out.println(ctx.formParam("password"));
 		String page = "";
-		em = serv.getEmployee(em);
-		if(em != null){
+	
+		if(service.authenticateEmployee(em)){
+			em = service.getEmployee(em);
 			
-//			System.out.println(em);
+
 			ctx.sessionAttribute("user", em);
 			ctx.sessionAttribute("access","customer");
-
+		
 			ctx.res.sendRedirect("http://localhost:8000/home");
 		
 		}else {
-			
+	
 			ctx.res.setStatus(401);
 		}
 			

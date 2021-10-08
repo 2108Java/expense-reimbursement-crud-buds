@@ -16,7 +16,7 @@ public class ReportDAOImpl implements ReportDAO{
 	
 	
 	@Override
-	public boolean insertReimbursement(Employee em, Report report) {
+	public boolean insertReimbursement(Report report) {
 		boolean success = false;
 		
 		String sql = "insert into expense_reports (employee_id, expense_type, description,  amount) values ((select employee_id from employee where username = ? ),?,?,?)";
@@ -25,7 +25,7 @@ public class ReportDAOImpl implements ReportDAO{
 			
 			PreparedStatement ps = connection.prepareStatement(sql);
 	
-			ps.setString(1, em.getUsername());
+			ps.setString(1, report.getEmployeeName());
 			ps.setString(2, report.getReportType());
 			ps.setString(3, report.getDescription());
 			ps.setDouble(4, report.getAmount());

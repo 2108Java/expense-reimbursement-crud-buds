@@ -19,11 +19,16 @@ import io.javalin.http.Context;
 
 public class UserController {
 	
-	EmployeeDAO emDao = new EmployeeDAOImpl();
+  
+	private EmployeeDAO emDao = new EmployeeDAOImpl();
+	private ReportDAO reDao = new ReportDAOImpl();
+	private Service service = new ServiceImpl(emDao,reDao);
 	
-	ReportDAO reDao = new ReportDAOImpl();
-	
-	Service serv = new ServiceImpl(emDao,reDao);
+	public UserController(Service service) {
+		super();
+		this.service = service;
+	}
+
 	
 	Employee em = new Employee();
 	List<Report> ReportList = new ArrayList<>();
@@ -45,34 +50,42 @@ public class UserController {
 
 	public Employee getAllReports(Context ctx) {
 		ctx.sessionAttribute("user");
-		
+    
 		em = ctx.cachedSessionAttribute("user");
-		
+		em = service.getEmployeeReports(em);
 		
 //		em = (Employee) JSON.parse(sess);
 		serv.getEmployeeReports(em);
 //		System.out.println(em);
+
 		ctx.res.setStatus(200);
 		return em;
 	}
 	
 	public Employee addReport(Context ctx) {
+		em = ctx.cachedSessionAttribute("user");
 		Report rep = new Report();
 		
-		System.out.println(ctx.formParam("amount"));
-		System.out.println(ctx.formParam("description"));
-		System.out.println(ctx.formParam("type"));
-		
+		//System.out.println(ctx.formParam("amount"));
+		//System.out.println(ctx.formParam("description"));
+		//System.out.println(ctx.formParam("type"));
+		//ReportList.add(rep);
+
 		rep.setAmount(Float.parseFloat(ctx.formParam("amount")));
-		rep.setApprovalStatus("PENDING");
 		rep.setDescription(ctx.formParam("description"));
 		rep.setReportType(ctx.formParam("type"));
-		ReportList.add(rep);
-		em = ctx.cachedSessionAttribute("user");
-//		em.setReportList(ReportList);
+		rep.setEmployeeName(em.getUsername());
 		
-		System.out.println(em);
+		System.out.println(rep.toString());
+		System.out.println(rep.getEmployeeName());
 		
+		if (service.insertEmployeeReport(rep)) {
+			ctx.res.setStatus(200);
+		}else {
+			ctx.res.setStatus(400);
+		}
+		
+
 		return em;
 	}
 

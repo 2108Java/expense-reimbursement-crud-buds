@@ -32,5 +32,7 @@ public interface Service {
 	
 	public List<Report> getReimbursementsByType(String reimbursementType);
 	
+	public boolean insertEmployeeReport(Report newReport);
+	
 	
 }

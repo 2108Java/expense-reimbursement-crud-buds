@@ -78,6 +78,18 @@ public class ServiceImpl implements Service{
 	public List<Report> getReimbursementsByType(String reimbursementType) {
 		return reDao.selectReimbursementsByType(reimbursementType);
 	}
+
+	@Override
+	public boolean insertEmployeeReport(Report newReport) {
+		boolean success = false;
+		if(reDao.insertReimbursement(newReport)) {
+			success = true;
+			System.out.println("Report successfull added");
+		}else {
+			System.out.println("Report failed to add");
+		}
+		return success;
+	}
 	
 	
 }
