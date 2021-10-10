@@ -56,6 +56,15 @@ public class RequestHandler {
 			}
 		});
 		
+		
+		app.get("/manager", ctx -> {
+			
+			ctx.req.getRequestDispatcher("FinanceManager.html").forward(ctx.req, ctx.res);
+			
+			
+		});
+		
+		
 		app.get("/reports", ctx -> {
 			
 //			if(checkSession(ctx)) {
@@ -64,9 +73,24 @@ public class RequestHandler {
 			 //localhost:8000/planets is going to return planets
 		});
 		
+		
+		
 		app.post("/addReport", ctx -> {
 			uc.addReport(ctx);
 			ctx.redirect("http://localhost:8000/home");
+		});
+		
+		app.get("/viewReport", ctx -> {
+			
+			ctx.json(uc.viewAllReports(ctx));
+			
+		});
+		
+		
+		app.post("/manager", ctx -> {
+		
+			uc.viewSelect(ctx);
+//			ctx.redirect("http://localhost:8000/manager");
 		});
 		
 		app.post("/logOut", ctx -> {
@@ -74,6 +98,8 @@ public class RequestHandler {
 			ctx.consumeSessionAttribute("access");
 			ctx.redirect("http://localhost:8000/");
 		});
+		
+		
 	}
 
 }

@@ -27,41 +27,41 @@
     <div class = "container">
         <div class = "text-center">
 			<div class="form-control">
-
-			<form action="/" method="post">
+			 
+			<!-- <form action="/manager" method="post"> -->
 			<div class ="col-md text-center custom-control custom-radio">
 			
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
-                    <label class="form-check-label" for="flexRadioDefault1">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked value ="All">
+                    <label class="form-check-label" for="flexRadioDefault1" >
                     All
                     </label>
-                    </div>
-                    <div class="col-md text-center custom-control custom-radio">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
-                    <label class="form-check-label" for="flexRadioDefault1">
+            </div>
+            <div class="col-md text-center custom-control custom-radio">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="Rejected">
+                    <label class="form-check-label" for="flexRadioDefault1"> 
                     Rejected
                     </label>
-            		</div>
-            		 <div class="col-md text-center custom-control custom-radio">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" >
+            </div>
+            <div class="col-md text-center custom-control custom-radio">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" value="Pending">
                     <label class="form-check-label" for="flexRadioDefault1">
                     Pending
                     </label>
-            		</div>
-            		 <div class="col-md text-center custom-control custom-radio">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4">
+            </div>
+            <div class="col-md text-center custom-control custom-radio">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" value="Approved">
                     <label class="form-check-label" for="flexRadioDefault1">
                     Approved
-                    </label>
-            		</div>
+                    </label> 
+            </div>
             		
-            <input type="submit" id="reportSubmit" class="btn btn-success">
-            </form>
+            <input type="submit" id="viewSubmit" class="btn btn-success">
+            <!-- </form> -->
             
         </div>
     </div>
-</div>
-    <div class = "info">
+</div>  
+    <div class = "info"> 
         <div class = "text-center">
    
             <table class="table">
@@ -78,7 +78,7 @@
 					<th scope ="col">Approve</th>
                 </tr>
             </thead>
-            <tbody id ="employeeTableBody">
+            <tbody id ="employeeTableBody">      
 
 
             </tbody>
@@ -86,8 +86,8 @@
             </table>
 
 
-        </div>
-    </div>
+        </div>      
+    </div>     
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

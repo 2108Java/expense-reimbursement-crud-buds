@@ -38,16 +38,25 @@ public class AuthenticateController {
 	
 		if(service.authenticateEmployee(em)){
 			em = service.getEmployee(em);
+			if(service.verifyManager(em)) {
+				ctx.sessionAttribute("user", em);
+				ctx.sessionAttribute("access","manager");
 			
-
-			ctx.sessionAttribute("user", em);
+				ctx.res.sendRedirect("http://localhost:8000/manager");
+				
+				
+			}else{
+				ctx.sessionAttribute("user", em);
 			ctx.sessionAttribute("access","customer");
 		
 			ctx.res.sendRedirect("http://localhost:8000/home");
+			}
+
+			
 		
 		}else {
-	
-			ctx.res.setStatus(401);
+			ctx.res.sendRedirect("http://localhost:8000/");
+			
 		}
 			
 //		if(service.authenticate(ctx.queryParam(username))) What we would do in a full stack. 

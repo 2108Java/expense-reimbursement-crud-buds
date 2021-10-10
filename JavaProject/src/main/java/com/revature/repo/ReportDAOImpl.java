@@ -85,7 +85,7 @@ public class ReportDAOImpl implements ReportDAO{
 		
 		try(Connection connection = comm.connection()){
 		
-		String sql = "SELECT * FROM expense_reports LEFT JOIN employee ON expense_reports.employee_id = employee.employee_id WHERE expense_type = ? ORDER BY creation_time ASC";
+		String sql = "SELECT * FROM expense_reports LEFT JOIN employee ON expense_reports.employee_id = employee.employee_id WHERE approval_status = ? ORDER BY creation_time ASC";
 		PreparedStatement ps = connection.prepareStatement(sql);
 		
 		ps.setString(1 ,reimbursementType);

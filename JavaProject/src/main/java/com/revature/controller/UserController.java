@@ -28,22 +28,22 @@ public class UserController {
 	}
 	
 	Employee em = new Employee();
-	List<Report> ReportList = new ArrayList<>();
+	List<Report> reportList = new ArrayList<>();
 	public Employee initalizeList() {
 		
 		
 		
-		ReportList.add(0, new Report(1, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		ReportList.add(1, new Report(2, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		ReportList.add(2, new Report(3, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		ReportList.add(3, new Report(4, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		ReportList.add(4, new Report(5, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		ReportList.add(5, new Report(6, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		ReportList.add(6, new Report(7, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		ReportList.add(7, new Report(8, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
+		reportList.add(0, new Report(1, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
+		reportList.add(1, new Report(2, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
+		reportList.add(2, new Report(3, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
+		reportList.add(3, new Report(4, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
+		reportList.add(4, new Report(5, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
+		reportList.add(5, new Report(6, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
+		reportList.add(6, new Report(7, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
+		reportList.add(7, new Report(8, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
 		em.setUsername("Harley");
 		em.setPassword("starfish");
-		em.setReportList(ReportList);
+		em.setReportList(reportList);
 		return em;
 	}
 
@@ -84,5 +84,28 @@ public class UserController {
 
 		return em;
 	}
+	
+	public List<Report> viewAllReports(Context ctx) {
+		
+		
+		reportList = service.getAllReports();
+		
+		return reportList;
+	}
+
+	public void viewSelect(Context ctx) {
+		
+		String selector = ctx.formParam("flexRadioDefault");
+		
+		System.out.println(selector);
+		
+		
+		reportList = service.getReportsByType(selector);
+		
+		System.out.println(reportList);
+		
+		
+	}
+	
 
 }

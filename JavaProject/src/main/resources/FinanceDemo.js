@@ -3,53 +3,167 @@ console.log("Hello");
 
 function getReport(){ //getting a single report
 
-	let planetId = document.getElementById("planetId").value;
-	
-	let baseUrl = "http://localhost:8000/planet/";
-	
-	let fullPlanetUrl = baseUrl +planetId;
-	
-	let xhttp = new XMLHttpRequest();
-	
-	xhttp.onreadystatechange = function(){
-		
-		if(this.status == 200 && this.readyState == 4){
-			//let planet = JSON.parse(this.responseText);
-			//console.log(planet);
-			
-			addRow(planet);
-		}
-	}
-	
-	xhttp.open("GET",fullPlanetUrl);
-	
-	xhttp.send();
+    let planetsUrl = "http://localhost:8000/viewReport";
+
+    
+
+			// console.log(report[0].employeeName);
+
+            let radios = document.getElementsByName("flexRadioDefault");
+
+           radios = document.querySelector('input[name="flexRadioDefault"]:checked').value;
+
+           console.log(radios);
+
+
+           if(radios == 'All'){
+            fetch(planetsUrl).then(function(response) {
+                response.json().then(function(report){	
+                console.log(report);
+             
+                deleteTableRows();
+    
+                addAllReports(report);
+          
+              });
+          }).catch(err => console.error(err));
+
+           }else if(radios == 'Rejected') {
+
+            fetch(planetsUrl).then(function(response) {
+                response.json().then(function(report){	
+                console.log(report);
+             
+                deleteTableRows();
+    
+                addAllReports(report);
+          
+              });
+          }).catch(err => console.error(err));
+
+
+
+           }else if(radios == 'Pending'){
+                fetch(planetsUrl).then(function(response) {
+                                response.json().then(function(report){	
+                                console.log(report);
+                             
+                                deleteTableRows();
+                    
+                                addAllPending(report);
+                          
+                              });
+                          }).catch(err => console.error(err));
+           }else{
+               
+            fetch(planetsUrl).then(function(response) {
+                response.json().then(function(report){	
+                console.log(report);
+             
+                deleteTableRows();
+    
+                addAllReports(report);
+          
+              });
+          }).catch(err => console.error(err));
+           }
+
+            // for (var i = 0, length = radios.length; i < length; i++) {
+            //     if (radios[i].checked) {
+            //       // do whatever you want with the checked radio
+            //     //   alert(radios[i].value);
+                    
+            //       // only one radio can be logically checked, don't check the rest
+
+            //       console.log(radios[i].value);
+            //         if(radios[i].checked == 'All'){
+            //             console.log(radios[i].value);
+            //         	fetch(planetsUrl).then(function(response) {
+  		    //                 response.json().then(function(report){	
+			//                 console.log(report);
+            //                 deleteTableRows();
+                        
+            //                 addAllPlanets(report);
+	        //                 });
+	        //             }).catch(err => console.error(err));
+
+                        
+            //         }else if(radios[i].checked == 'Pending'){
+            //             console.log(radios[i].value);
+            //             fetch(planetsUrl).then(function(response) {
+            //                 response.json().then(function(report){	
+            //                 console.log(report);
+                         
+            //                 deleteTableRows();
+                
+            //                 addAllPending(report);
+                      
+            //               });
+            //           }).catch(err => console.error(err));
+                        
+            //         }else if(radios[i].checked == 'Rejected'){
+            //             console.log(radios[i].value);
+            //             fetch(planetsUrl).then(function(response) {
+            //                 response.json().then(function(report){	
+            //               console.log(report);
+            //               deleteTableRows();
+                      
+            //           addAllPlanets(report);
+            //               });
+            //           }).catch(err => console.error(err));
+            //             deleteTableRows();
+            //         }else{
+
+            //             fetch(planetsUrl).then(function(response) {
+            //                 response.json().then(function(report){	
+            //               console.log(report);
+            //               deleteTableRows();
+                      
+            //         //   addAllPlanets(report);
+            //               });
+            //           }).catch(err => console.error(err));
+            //             deleteTableRows();
+            //         }
+
+
+
+
+            //       break;
+            //     }
+            //   }
+            // let radioValues = Radio.;
+            
+
+			// addAllPlanets(report);
+  	
 	
 }
 
 function getAllReports(){ //getting all the reimbursement tickets
 	
-	let planetsUrl = "http://localhost:8000/reports";
+	let planetsUrl = "http://localhost:8000/viewReport";
+
+    
 
 	fetch(planetsUrl).then(function(response) {
-  		response.json().then(function(users){	
-			console.log(users);
-			console.log(users.reportList[1].reportId);
-			addAllPlanets(users);
+  		response.json().then(function(report){	
+			console.log(report);
+			console.log(report[0].employeeName);
+			addAllPlanets(report);
   		});
 	}).catch(err => console.error(err));
 
 }
 
-// let button = document.getElementById("planetSubmit");
-// button.addEventListener('click',getPlanet);
+let button = document.getElementById("viewSubmit");
+button.addEventListener('click',getReport);
 
-window.onload = function(){
+// window.onload = function(){
 
-	getAllReports();
+// 	getAllReports();
 	
-//This functions get invoked when the page is loaded in!
-}
+// //This functions get invoked when the page is loaded in!
+// }
 
 function addRow(report){
     //Append this onto my table, 
@@ -77,7 +191,7 @@ function addRow(report){
     //assigning the "text value" to our columns 
 
     idColumn.innerText = report.reportId;
-    nameColumn.innerText = report.username;
+    nameColumn.innerText = report.employeeName;
 	typeColumn.innerText = report.reportType
     descColumn.innerText = report.description;
     amountColumn.innerText = report.amount;
@@ -136,7 +250,7 @@ function addRowPending(report){
     //assigning the "text value" to our columns 
 
     idColumn.innerText = report.reportId;
-    nameColumn.innerText = report.username;
+    nameColumn.innerText = report.employeeName;
 	typeColumn.innerText = report.reportType
     descColumn.innerText = report.description;
     amountColumn.innerText = report.amount;
@@ -160,11 +274,42 @@ function addRowPending(report){
 }
 
 
-function addAllPlanets(user){
+function addAllReports(user){
 	
-	for(let report of user.reportList){
+	for(let report of user){
+        console.log(report.approvalStatus);
 		addRow( report);
 	}
 	
+
+}
+
+function addAllPending(user){
 	
+	for(let report of user){
+        if(report.approvalStatus == "Pending"){
+            console.log(report.approvalStatus);
+            addRowPending( report);
+        }
+		
+	}
+	
+
+}
+
+
+
+function deleteTableRows(){
+
+    let tableHeaderRowCount = 0;
+    let table = document.getElementById('employeeTableBody');
+    let rowCount = table.rows.length;
+    for (let i = tableHeaderRowCount; i < rowCount; i++) {
+        table.deleteRow(tableHeaderRowCount);
+    }
+	
+    // let tr = document.getElementsByTagName('tr')[0];
+
+    // tr.remove();
+    // $("#table_of_items tr").remove(); 
 }
