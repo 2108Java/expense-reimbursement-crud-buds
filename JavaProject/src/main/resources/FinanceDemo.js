@@ -36,7 +36,7 @@ function getReport(){ //getting a single report
              
                 deleteTableRows();
     
-                addAllReports(report);
+                addAllRejected(report);
           
               });
           }).catch(err => console.error(err));     
@@ -62,7 +62,7 @@ function getReport(){ //getting a single report
              
                 deleteTableRows();
     
-                addAllReports(report);
+                addAllApproved(report);
           
               });
           }).catch(err => console.error(err));
@@ -89,6 +89,24 @@ function rejectGetSelected(event){ //getting all the reimbursement tickets
 
 
 }
+
+function approveGetSelected(event){ //getting all the reimbursement tickets
+	
+	let planetsUrl = "http://localhost:8000/viewReport";
+
+    
+
+	fetch(planetsUrl).then(function(response) {
+  		response.json().then(function(report){	
+			console.log(report);
+			
+			approve(report,event);
+  		});
+	}).catch(err => console.error(err));
+
+
+}
+
 
 let button = document.getElementById("viewSubmit");
 button.addEventListener('click',getReport);
@@ -179,7 +197,7 @@ function addRowPending(report){
     approveBtn.type = "button";
     approveBtn.value = "Approve";
     approveBtn.setAttribute("id",report.reportId);
-    approveBtn.addEventListener('click', approve);
+    approveBtn.addEventListener('click', approveGetSelected);
     approveBtnColumn.appendChild(approveBtn);
     // approveBtn.type = "button";
 
@@ -228,13 +246,29 @@ function addAllPending(user){
         if(report.approvalStatus == "Pending"){
             // console.log(report.approvalStatus);
             addRowPending( report);
-        }
-		
+        }	
 	}
-	
-
 }
 
+function addAllRejected(user){
+	
+	for(let report of user){
+        if(report.approvalStatus == "Rejected"){
+            // console.log(report.approvalStatus);
+            addRow( report);
+        }	
+	}
+}
+
+function addAllApproved(user){
+	
+	for(let report of user){
+        if(report.approvalStatus == "Approved"){
+            // console.log(report.approvalStatus);
+            addRow( report);
+        }	
+	}
+}
 
 
 function deleteTableRows(){
@@ -251,50 +285,39 @@ function deleteTableRows(){
     // tr.remove();
     // $("#table_of_items tr").remove(); 
 }
-function approve(event){
-    // console.log(event.srcElement.id);
+function approve(report, event){
+   console.log(event.srcElement.id);
 
-    var reports = getSelectedReport(event.srcElement.id);
-	console.log(reports)
-//    let reportsUrl = "http://localhost:8000/viewReport";
+    let url = "http://localhost:8000/managerApproved/" + event.srcElement.id ;
 
-    
- //   var reports;
-//	fetch(reportsUrl).then(function(response) {
-  	//	response.json().then(function(report){	
-	//		console.log(report);
-	//		console.log(report[event.srcElement.id].employeeName);
-   //         reports = report;
-			
-  	//	});
-//	}).catch(err => console.error(err));
-
-    let url = "http://localhost:8000/managerApproved/" + event.srcElement.id;
-
-    // console.log(url);
+    console.log(url);
 
     let xhttp = new XMLHttpRequest();
-  
+	
 	xhttp.onreadystatechange = function (){ 
 		//fat arrow notation does not support "this" keyword
 		
-		// console.log(this.ready State);
-        
-		    
+		console.log(this.readyState);
+		
 		if(this.readyState == 4 && this.status == 200){
 
 			//resetTables();			
-          //  console.log(reports);
-			// getReport();
-			// for(let report of reports){
-       // if(report.id == event.srcElement.id){
 
-               // xhttp.open("PUT",url);
-	
-	          //  xhttp.send(report);
-        }
-		
+			 getReport();
+			
+		}
+
 	}
+	for(let reportId of report){
+        if(reportId.reportId == event.srcElement.id){
+				console.log(reportId)
+				
+				
+                xhttp.open("PUT",url);
+	
+	            xhttp.send(JSON.stringify(reportId))
+			}
+		}
 
 		}
 

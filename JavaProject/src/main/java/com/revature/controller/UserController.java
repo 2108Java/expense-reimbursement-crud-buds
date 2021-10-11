@@ -154,16 +154,16 @@ public class UserController {
 		try {
 			re = om.readValue(reportJSONText, Report.class);
 			System.out.println(re);
-//			re.setApprovalStatus("Rejected");
+			re.setApprovalStatus("Rejected");
 			
-//			System.out.println(re);
+			System.out.println(re);
 			
-//			boolean success = service.updateReportStatus(re);
-		if(true) {
+			boolean success = service.updateReportStatus(re);
+		if(success) {
 			ctx.res.setStatus(200);
 			
-//		}else {
-//			ctx.res.setStatus(402);
+		}else {
+			ctx.res.setStatus(402);
 		}
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
