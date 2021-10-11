@@ -1,5 +1,8 @@
 package com.revature.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize 
 public class Report {
 	
 	//Attributes

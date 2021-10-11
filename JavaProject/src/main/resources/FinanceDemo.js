@@ -73,7 +73,7 @@ function getReport(){ //getting a single report
 	
 }
 
-function getSelectedReport(id){ //getting all the reimbursement tickets
+function rejectGetSelected(event){ //getting all the reimbursement tickets
 	
 	let planetsUrl = "http://localhost:8000/viewReport";
 
@@ -82,10 +82,11 @@ function getSelectedReport(id){ //getting all the reimbursement tickets
 	fetch(planetsUrl).then(function(response) {
   		response.json().then(function(report){	
 			console.log(report);
-			console.log(report[id-1].employeeName);
-			return report;
+			
+			reject(report,event);
   		});
 	}).catch(err => console.error(err));
+
 
 }
 
@@ -171,7 +172,7 @@ function addRowPending(report){
     rejectBtn.type = "button";
     rejectBtn.value = "Reject";
     rejectBtn.setAttribute("id",report.reportId);
-    rejectBtn.addEventListener('click', reject);
+    rejectBtn.addEventListener('click', rejectGetSelected);
     rejectBtnColumn.appendChild(rejectBtn);
     
     let approveBtn = document.createElement("input");
@@ -253,20 +254,20 @@ function deleteTableRows(){
 function approve(event){
     // console.log(event.srcElement.id);
 
-    
+    var reports = getSelectedReport(event.srcElement.id);
+	console.log(reports)
+//    let reportsUrl = "http://localhost:8000/viewReport";
 
-    let reportsUrl = "http://localhost:8000/viewReport";
-
     
-    var reports;
-	fetch(reportsUrl).then(function(response) {
-  		response.json().then(function(report){	
-			console.log(report);
-			console.log(report[event.srcElement.id].employeeName);
-            reports = report;
+ //   var reports;
+//	fetch(reportsUrl).then(function(response) {
+  	//	response.json().then(function(report){	
+	//		console.log(report);
+	//		console.log(report[event.srcElement.id].employeeName);
+   //         reports = report;
 			
-  		});
-	}).catch(err => console.error(err));
+  	//	});
+//	}).catch(err => console.error(err));
 
     let url = "http://localhost:8000/managerApproved/" + event.srcElement.id;
 
@@ -283,29 +284,21 @@ function approve(event){
 		if(this.readyState == 4 && this.status == 200){
 
 			//resetTables();			
-            console.log(reports);
+          //  console.log(reports);
 			// getReport();
-			 for(let report of reports){
-        if(report.id == event.srcElement.id){
+			// for(let report of reports){
+       // if(report.id == event.srcElement.id){
 
-                xhttp.open("PUT",url);
+               // xhttp.open("PUT",url);
 	
-	            xhttp.send(report);
+	          //  xhttp.send(report);
         }
 		
 	}
 
 		}
 
-	}
- 
-   
-
-    
-
-}
-
-function reject(event){
+function reject(report, event){
     console.log(event.srcElement.id);
 
     let url = "http://localhost:8000/managerRejected/" + event.srcElement.id ;
@@ -328,13 +321,16 @@ function reject(event){
 		}
 
 	}
-
+	for(let reportId of report){
+        if(reportId.reportId == event.srcElement.id){
+				console.log(reportId)
+				
+				
+                xhttp.open("PUT",url);
+	
+	            xhttp.send(JSON.stringify(reportId))
+			}
+		}
+	}
 
    
-
-
-
-    xhttp.open("PUT",url);
-	
-	xhttp.send();
-}
