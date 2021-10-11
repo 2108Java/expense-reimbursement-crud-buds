@@ -87,12 +87,21 @@ public class RequestHandler {
 		});
 		
 		
-		app.post("/manager", ctx -> {
+		app.put("/manager", ctx -> {
 		
 			uc.viewSelect(ctx);
 //			ctx.redirect("http://localhost:8000/manager");
 		});
 		
+		app.put("/managerApproved/{id}", ctx ->{
+			uc.updateStatusApproved(ctx);
+		});
+		
+		app.put("/managerRejected/{id}", ctx ->{
+			System.out.println("Rejected");
+			uc.updateStatusRejected(ctx);
+			
+		});
 		app.post("/logOut", ctx -> {
 			ctx.consumeSessionAttribute("user");
 			ctx.consumeSessionAttribute("access");

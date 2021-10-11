@@ -1,4 +1,4 @@
-console.log("Hello");
+ console.log("Hello");
 
 
 function getReport(){ //getting a single report
@@ -23,7 +23,7 @@ function getReport(){ //getting a single report
              
                 deleteTableRows();
     
-                addAllReports(report);
+                addAllReports(report); 
           
               });
           }).catch(err => console.error(err));
@@ -39,7 +39,7 @@ function getReport(){ //getting a single report
                 addAllReports(report);
           
               });
-          }).catch(err => console.error(err));
+          }).catch(err => console.error(err));     
 
 
 
@@ -68,78 +68,12 @@ function getReport(){ //getting a single report
           }).catch(err => console.error(err));
            }
 
-            // for (var i = 0, length = radios.length; i < length; i++) {
-            //     if (radios[i].checked) {
-            //       // do whatever you want with the checked radio
-            //     //   alert(radios[i].value);
-                    
-            //       // only one radio can be logically checked, don't check the rest
-
-            //       console.log(radios[i].value);
-            //         if(radios[i].checked == 'All'){
-            //             console.log(radios[i].value);
-            //         	fetch(planetsUrl).then(function(response) {
-  		    //                 response.json().then(function(report){	
-			//                 console.log(report);
-            //                 deleteTableRows();
-                        
-            //                 addAllPlanets(report);
-	        //                 });
-	        //             }).catch(err => console.error(err));
-
-                        
-            //         }else if(radios[i].checked == 'Pending'){
-            //             console.log(radios[i].value);
-            //             fetch(planetsUrl).then(function(response) {
-            //                 response.json().then(function(report){	
-            //                 console.log(report);
-                         
-            //                 deleteTableRows();
-                
-            //                 addAllPending(report);
-                      
-            //               });
-            //           }).catch(err => console.error(err));
-                        
-            //         }else if(radios[i].checked == 'Rejected'){
-            //             console.log(radios[i].value);
-            //             fetch(planetsUrl).then(function(response) {
-            //                 response.json().then(function(report){	
-            //               console.log(report);
-            //               deleteTableRows();
-                      
-            //           addAllPlanets(report);
-            //               });
-            //           }).catch(err => console.error(err));
-            //             deleteTableRows();
-            //         }else{
-
-            //             fetch(planetsUrl).then(function(response) {
-            //                 response.json().then(function(report){	
-            //               console.log(report);
-            //               deleteTableRows();
-                      
-            //         //   addAllPlanets(report);
-            //               });
-            //           }).catch(err => console.error(err));
-            //             deleteTableRows();
-            //         }
-
-
-
-
-            //       break;
-            //     }
-            //   }
-            // let radioValues = Radio.;
-            
-
-			// addAllPlanets(report);
+        
   	
 	
 }
 
-function getAllReports(){ //getting all the reimbursement tickets
+function getSelectedReport(id){ //getting all the reimbursement tickets
 	
 	let planetsUrl = "http://localhost:8000/viewReport";
 
@@ -148,8 +82,8 @@ function getAllReports(){ //getting all the reimbursement tickets
 	fetch(planetsUrl).then(function(response) {
   		response.json().then(function(report){	
 			console.log(report);
-			console.log(report[0].employeeName);
-			addAllPlanets(report);
+			console.log(report[id-1].employeeName);
+			return report;
   		});
 	}).catch(err => console.error(err));
 
@@ -158,12 +92,12 @@ function getAllReports(){ //getting all the reimbursement tickets
 let button = document.getElementById("viewSubmit");
 button.addEventListener('click',getReport);
 
-// window.onload = function(){
+window.onload = function(){
 
-// 	getAllReports();
+	getReport(); 
 	
-// //This functions get invoked when the page is loaded in!
-// }
+//This functions get invoked when the page is loaded in!
+}
 
 function addRow(report){
     //Append this onto my table, 
@@ -174,7 +108,7 @@ function addRow(report){
     //Creating a table row
     let tableRow = document.createElement("tr");
 
-    //Create the columns
+    //Create the columns 
     let idColumn = document.createElement("td");
     let nameColumn = document.createElement("td");
 	let typeColumn = document.createElement("td");
@@ -185,8 +119,7 @@ function addRow(report){
    
 
     
-
-
+       
 
     //assigning the "text value" to our columns 
 
@@ -235,13 +168,17 @@ function addRowPending(report){
 
     //assign the button
     let rejectBtn = document.createElement("input");
-    rejectBtn.type = "submit";
-    rejectBtn.innerText = "submit";
+    rejectBtn.type = "button";
+    rejectBtn.value = "Reject";
+    rejectBtn.setAttribute("id",report.reportId);
+    rejectBtn.addEventListener('click', reject);
     rejectBtnColumn.appendChild(rejectBtn);
     
     let approveBtn = document.createElement("input");
-    approveBtn.type = "submit";
-    approveBtn.innerText = "submit";
+    approveBtn.type = "button";
+    approveBtn.value = "Approve";
+    approveBtn.setAttribute("id",report.reportId);
+    approveBtn.addEventListener('click', approve);
     approveBtnColumn.appendChild(approveBtn);
     // approveBtn.type = "button";
 
@@ -288,7 +225,7 @@ function addAllPending(user){
 	
 	for(let report of user){
         if(report.approvalStatus == "Pending"){
-            console.log(report.approvalStatus);
+            // console.log(report.approvalStatus);
             addRowPending( report);
         }
 		
@@ -312,4 +249,92 @@ function deleteTableRows(){
 
     // tr.remove();
     // $("#table_of_items tr").remove(); 
+}
+function approve(event){
+    // console.log(event.srcElement.id);
+
+    
+
+    let reportsUrl = "http://localhost:8000/viewReport";
+
+    
+    var reports;
+	fetch(reportsUrl).then(function(response) {
+  		response.json().then(function(report){	
+			console.log(report);
+			console.log(report[event.srcElement.id].employeeName);
+            reports = report;
+			
+  		});
+	}).catch(err => console.error(err));
+
+    let url = "http://localhost:8000/managerApproved/" + event.srcElement.id;
+
+    // console.log(url);
+
+    let xhttp = new XMLHttpRequest();
+  
+	xhttp.onreadystatechange = function (){ 
+		//fat arrow notation does not support "this" keyword
+		
+		// console.log(this.ready State);
+        
+		    
+		if(this.readyState == 4 && this.status == 200){
+
+			//resetTables();			
+            console.log(reports);
+			// getReport();
+			 for(let report of reports){
+        if(report.id == event.srcElement.id){
+
+                xhttp.open("PUT",url);
+	
+	            xhttp.send(report);
+        }
+		
+	}
+
+		}
+
+	}
+ 
+   
+
+    
+
+}
+
+function reject(event){
+    console.log(event.srcElement.id);
+
+    let url = "http://localhost:8000/managerRejected/" + event.srcElement.id ;
+
+    console.log(url);
+
+    let xhttp = new XMLHttpRequest();
+	
+	xhttp.onreadystatechange = function (){ 
+		//fat arrow notation does not support "this" keyword
+		
+		console.log(this.readyState);
+		
+		if(this.readyState == 4 && this.status == 200){
+
+			//resetTables();			
+
+			 getReport();
+			
+		}
+
+	}
+
+
+   
+
+
+
+    xhttp.open("PUT",url);
+	
+	xhttp.send();
 }

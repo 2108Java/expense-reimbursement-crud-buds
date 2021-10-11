@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.eclipse.jetty.server.Authentication.User;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.models.Employee;
 import com.revature.models.Report;
 import com.revature.repo.EmployeeDAO;
@@ -106,6 +109,65 @@ public class UserController {
 		
 		
 	}
+
+	public void updateStatusApproved(Context ctx) {
+		// TODO Auto-generated method stub
+		Report re = null;
+		
+		ObjectMapper om = new ObjectMapper();
+		
+		String reportJSONText = ctx.body();
+		
+		try {
+			re = om.readValue(reportJSONText, Report.class);
+			re.setApprovalStatus("Approved");
+			System.out.println(re);
+			boolean success = service.updateReportStatus(re);
+		if(success) {
+			ctx.res.setStatus(200);
+			
+		}else {
+			ctx.res.setStatus(402);
+		}
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ctx.res.setStatus(401);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			ctx.res.setStatus(500);
+			e.printStackTrace();
+		}	
+	}
 	
+	public void updateStatusRejected(Context ctx) {
+		// TODO Auto-generated method stub
+		Report re = null;
+		
+		ObjectMapper om = new ObjectMapper();
+		
+		String reportJSONText = ctx.body();
+		
+		try {
+			re = om.readValue(reportJSONText, Report.class);
+			re.setApprovalStatus("Rejected");
+			
+			boolean success = service.updateReportStatus(re);
+		if(success) {
+			ctx.res.setStatus(200);
+			
+		}else {
+			ctx.res.setStatus(402);
+		}
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			ctx.res.setStatus(401);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			ctx.res.setStatus(500);
+			e.printStackTrace();
+		}	
+	}
 
 }
