@@ -13,11 +13,30 @@ import io.javalin.http.Context;
 public class RequestHandler {
 	
 	public static boolean checkSession(Context ctx) {
-		if(ctx.sessionAttribute("user") != null) {
-			return true;
+		boolean success = false;
+		if(ctx.sessionAttribute("access") != null) {
+			if(ctx.sessionAttribute("access").equals("customer") 
+					|| ctx.sessionAttribute("access").equals("manager")){
+						success = true;
+			}
+		
 		}else {
-			return false;
+			return success;
 		}
+		return success;
+	}
+	
+	public static boolean checkManagerSession(Context ctx) {
+		boolean success = false;
+		if(ctx.sessionAttribute("access") != null) {
+			if(ctx.sessionAttribute("access").equals("manager")){
+						success = true;
+			}
+		
+		}else {
+			return success;
+		}
+		return success;
 	}
 	public static void setupEndPoints(Javalin app) {
 		EmployeeDAO emDao = new EmployeeDAOImpl();
@@ -59,48 +78,62 @@ public class RequestHandler {
 		
 		app.get("/manager", ctx -> {
 			
-			ctx.req.getRequestDispatcher("FinanceManager.html").forward(ctx.req, ctx.res);
-			
+			if(checkManagerSession(ctx)) {
+				ctx.req.getRequestDispatcher("FinanceManager.html").forward(ctx.req, ctx.res);
+			}else {
+				ctx.res.sendRedirect("http://localhost:8000/");
+			}
 			
 		});
 		
 		
 		app.get("/reports", ctx -> {
 			
-//			if(checkSession(ctx)) {
+			if(checkSession(ctx)) {
 				ctx.json(uc.getAllReports(ctx));
-//			}
-			 //localhost:8000/planets is going to return planets
+			}
+//			 localhost:8000/planets is going to return planets
 		});
-		
-		
-		
+	
 		app.post("/addReport", ctx -> {
-			uc.addReport(ctx);
+			if(checkSession(ctx)) {
+				uc.addReport(ctx);
 			ctx.redirect("http://localhost:8000/home");
+			}
+			
 		});
 		
 		app.get("/viewReport", ctx -> {
 			
-			ctx.json(uc.viewAllReports(ctx));
-			
+			if(checkManagerSession(ctx)) {
+				ctx.json(uc.viewAllReports(ctx));
+			}
+		
 		});
 		
 		
 		app.put("/manager", ctx -> {
 		
-			uc.viewSelect(ctx);
+			if(checkManagerSession(ctx)) {
+				uc.viewSelect(ctx);
+			}
+			
 //			ctx.redirect("http://localhost:8000/manager");
 		});
 		
 		app.put("/managerApproved/{id}", ctx ->{
-			uc.updateStatusApproved(ctx);
+			if(checkManagerSession(ctx)) {
+				uc.updateStatusApproved(ctx);
+			}
+		
 		});
 		
 		app.put("/managerRejected/{id}", ctx ->{
+			if(checkManagerSession(ctx)) {
+				uc.updateStatusRejected(ctx);	
+			}
 			System.out.println("Rejected");
-			uc.updateStatusRejected(ctx);
-			
+	
 		});
 		app.post("/logOut", ctx -> {
 			ctx.consumeSessionAttribute("user");

@@ -1,113 +1,65 @@
- console.log("Hello");
-
-
 function getReport(){ //getting a single report
 
-    let planetsUrl = "http://localhost:8000/viewReport";
-
-    
-
+    let reportUrl = "http://localhost:8000/viewReport";
 			// console.log(report[0].employeeName);
-
-            let radios = document.getElementsByName("flexRadioDefault");
-
+           let radios = document.getElementsByName("flexRadioDefault");
            radios = document.querySelector('input[name="flexRadioDefault"]:checked').value;
-
            console.log(radios);
-
-
            if(radios == 'All'){
-            fetch(planetsUrl).then(function(response) {
+            fetch(reportUrl).then(function(response) {
                 response.json().then(function(report){	
-                console.log(report);
-             
-                deleteTableRows();
-    
-                addAllReports(report); 
-          
+                console.log(report);             
+                deleteTableRows();   
+                addAllReports(report);           
               });
           }).catch(err => console.error(err));
-
            }else if(radios == 'Rejected') {
-
-            fetch(planetsUrl).then(function(response) {
+            fetch(reportUrl).then(function(response) {
                 response.json().then(function(report){	
-                console.log(report);
-             
-                deleteTableRows();
-    
-                addAllRejected(report);
-          
+                console.log(report);             
+                deleteTableRows();    
+                addAllRejected(report);          
               });
           }).catch(err => console.error(err));     
-
-
-
            }else if(radios == 'Pending'){
-                fetch(planetsUrl).then(function(response) {
+                fetch(reportUrl).then(function(response) {
                                 response.json().then(function(report){	
-                                console.log(report);
-                             
-                                deleteTableRows();
-                    
-                                addAllPending(report);
-                          
+                                console.log(report);                             
+                                deleteTableRows();                    
+                                addAllPending(report);                         
                               });
                           }).catch(err => console.error(err));
-           }else{
-               
-            fetch(planetsUrl).then(function(response) {
+           }else{              
+            fetch(reportUrl).then(function(response) {
                 response.json().then(function(report){	
-                console.log(report);
-             
-                deleteTableRows();
-    
-                addAllApproved(report);
-          
+                console.log(report);            
+                deleteTableRows();  
+                addAllApproved(report);         
               });
           }).catch(err => console.error(err));
-           }
-
-        
-  	
-	
+           }	
 }
-
 function rejectGetSelected(event){ //getting all the reimbursement tickets
-	
-	let planetsUrl = "http://localhost:8000/viewReport";
-
-    
-
-	fetch(planetsUrl).then(function(response) {
+	let reportUrl = "http://localhost:8000/viewReport";
+	fetch(reportUrl).then(function(response) {
   		response.json().then(function(report){	
 			console.log(report);
 			
 			reject(report,event);
   		});
 	}).catch(err => console.error(err));
-
-
 }
-
 function approveGetSelected(event){ //getting all the reimbursement tickets
 	
-	let planetsUrl = "http://localhost:8000/viewReport";
-
-    
-
-	fetch(planetsUrl).then(function(response) {
+	let reportUrl = "http://localhost:8000/viewReport";
+	fetch(reportUrl).then(function(response) {
   		response.json().then(function(report){	
 			console.log(report);
 			
 			approve(report,event);
   		});
 	}).catch(err => console.error(err));
-
-
 }
-
-
 let button = document.getElementById("viewSubmit");
 button.addEventListener('click',getReport);
 
@@ -120,8 +72,7 @@ window.onload = function(){
 
 function addRow(report){
     //Append this onto my table, 
-    
-   
+
     let tableBody = document.getElementById("employeeTableBody");
 
     //Creating a table row
@@ -135,12 +86,8 @@ function addRow(report){
     let amountColumn = document.createElement("td");
 	let timeColumn = document.createElement("td");
 	let statusColumn = document.createElement("td");
-   
-
-    
-       
-
-    //assigning the "text value" to our columns 
+	
+	//assigning the "text value" to our columns 
 
     idColumn.innerText = report.reportId;
     nameColumn.innerText = report.employeeName;
@@ -199,7 +146,6 @@ function addRowPending(report){
     approveBtn.setAttribute("id",report.reportId);
     approveBtn.addEventListener('click', approveGetSelected);
     approveBtnColumn.appendChild(approveBtn);
-    // approveBtn.type = "button";
 
 
 
@@ -269,8 +215,6 @@ function addAllApproved(user){
         }	
 	}
 }
-
-
 function deleteTableRows(){
 
     let tableHeaderRowCount = 0;
@@ -279,11 +223,6 @@ function deleteTableRows(){
     for (let i = tableHeaderRowCount; i < rowCount; i++) {
         table.deleteRow(tableHeaderRowCount);
     }
-	
-    // let tr = document.getElementsByTagName('tr')[0];
-
-    // tr.remove();
-    // $("#table_of_items tr").remove(); 
 }
 function approve(report, event){
    console.log(event.srcElement.id);
@@ -294,26 +233,16 @@ function approve(report, event){
 
     let xhttp = new XMLHttpRequest();
 	
-	xhttp.onreadystatechange = function (){ 
-		//fat arrow notation does not support "this" keyword
-		
+	xhttp.onreadystatechange = function (){ 		
 		console.log(this.readyState);
-		
 		if(this.readyState == 4 && this.status == 200){
-
-			//resetTables();			
-
 			 getReport();
-			
 		}
-
 	}
 	for(let reportId of report){
         if(reportId.reportId == event.srcElement.id){
 				console.log(reportId)
-				
-				
-                xhttp.open("PUT",url);
+			 	xhttp.open("PUT",url);
 	
 	            xhttp.send(JSON.stringify(reportId))
 			}
@@ -330,15 +259,10 @@ function reject(report, event){
 
     let xhttp = new XMLHttpRequest();
 	
-	xhttp.onreadystatechange = function (){ 
-		//fat arrow notation does not support "this" keyword
-		
+	xhttp.onreadystatechange = function (){ 		
 		console.log(this.readyState);
 		
 		if(this.readyState == 4 && this.status == 200){
-
-			//resetTables();			
-
 			 getReport();
 			
 		}
@@ -347,8 +271,7 @@ function reject(report, event){
 	for(let reportId of report){
         if(reportId.reportId == event.srcElement.id){
 				console.log(reportId)
-				
-				
+
                 xhttp.open("PUT",url);
 	
 	            xhttp.send(JSON.stringify(reportId))
