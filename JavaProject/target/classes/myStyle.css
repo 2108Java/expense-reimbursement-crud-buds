@@ -1,0 +1,12 @@
+.info{
+
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#jeff{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
