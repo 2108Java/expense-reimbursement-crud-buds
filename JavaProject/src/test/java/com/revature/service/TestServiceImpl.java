@@ -17,46 +17,60 @@ import com.revature.repo.ReportDAOImpl;
 public class TestServiceImpl {
 	
 	@Mock
-	private static ReportDAO rDAO;
+	private static ReportDAO reDAO;
 	@Mock
-	private static EmployeeDAO eDAO;
-//	@Mock
-//	private static Employee user;
-//	@Mock
-//	private static Employee em;
+	private static EmployeeDAO emDAO;
+	private static Report newReport = new Report(1, 60, "travel", "gobletly gook",
+													"pending", "jeff");
+	private static Employee user = new Employee("Brandon","starfish");
+	private static Employee employee = new Employee("Brandon","starfish");
 	
-	private Service serv = new ServiceImpl(eDAO, rDAO);
+	
+	
+	private Service serv = new ServiceImpl(emDAO, reDAO);
 	
 	@BeforeClass
 	public static void fakeMyDAO() {
-		rDAO = Mockito.mock(ReportDAOImpl.class);
+		reDAO = Mockito.mock(ReportDAOImpl.class);
 		
-		eDAO = Mockito.mock(EmployeeDAOImpl.class);
+		emDAO = Mockito.mock(EmployeeDAOImpl.class);
+
 		
-	
-		Employee user = new Employee("Brandon","starfish");
-		Report re = new Report();
-//		Mockito.when(user.isFinanceManager()).thenReturn(true);
-//		Mockito.when(em.getPassword()).thenReturn("starfish");
-		Mockito.when(rDAO.insertReport(null)).thenReturn(true);
-		Mockito.when(rDAO.selectEmployeeReports(1)).thenReturn(null);
-		Mockito.when(eDAO.isEmployee("Harley")).thenReturn(true);
-		Mockito.when(eDAO.isEmployee("Brandon")).thenReturn(true);
-		Mockito.when(eDAO.selectEmployeeByUsername(user)).thenReturn(user);
+		
+		Mockito.when(reDAO.updateReport(newReport)).thenReturn(true);
+		Mockito.when(reDAO.insertReport(newReport)).thenReturn(true);
+		Mockito.when(reDAO.selectEmployeeReports(1)).thenReturn(null);
+		Mockito.when(emDAO.isEmployee("Harley")).thenReturn(true);
+		Mockito.when(emDAO.isEmployee("Brandon")).thenReturn(true);
+		Mockito.when(emDAO.selectEmployeeByUsername(user)).thenReturn(employee);
+
 	}
 
+	@Test
+	public void testGetEmployee() {
+		
+		System.out.println(serv.getEmployee(user));
+		assertNotNull(serv.getEmployee(user));
+		
+	}
 	
-//	@Test
-//	public void testAuthenticateEmployee() {
-//		Employee user = new Employee("Brandon","starfish");
-//		
-//		assertTrue(serv.authenticateEmployee(user));
-//		
-//	}
+	@Test
+	public void testVerifyEmployeeExists() {
+		
+		assertTrue(serv.verifyEmployeeExists("Harley"));
+	}
+	
+	@Test
+	public void testAuthenticateEmployee() {
+		
+		
+		assertTrue(serv.authenticateEmployee(user));
+		
+	}
 	
 	@Test
 	public void testVerifyManager() {
-		Employee user = new Employee("Brandon","starfish");
+
 		user.setFinanceManager(true);
 		
 		assertTrue(serv.verifyManager(user));
@@ -64,7 +78,7 @@ public class TestServiceImpl {
 	
 	@Test
 	public void testGetEmployeeReports() {
-		Employee user = new Employee("Brandon","starfish");
+
 		
 		assertNotNull(serv.getEmployeeReports(user));
 		
@@ -72,9 +86,9 @@ public class TestServiceImpl {
 	
 	@Test
 	public void testCreateEmployeeReport() {
-		Report re = new Report();
-		
-		assertTrue(serv.createEmployeeReport(re));
+
+
+		assertTrue(serv.createEmployeeReport(newReport));
 	}
 	
 	@Test
@@ -84,7 +98,8 @@ public class TestServiceImpl {
 	
 	@Test
 	public void testUpdateReportStatus() {
-		Report re = new Report();
-		assertTrue(serv.updateReportStatus(re));
+		
+		assertTrue(serv.updateReportStatus(newReport));
+		
 	}
 }
