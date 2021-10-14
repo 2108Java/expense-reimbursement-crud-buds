@@ -1,0 +1,21 @@
+2021-10-12 10:54:02 INFO  Service:49 - Authenticated User:Brandon
+2021-10-12 10:54:03 INFO  Service:65 - Autherized user as Manager:Brandon
+2021-10-12 17:22:11 INFO  Service:29 - Verifying that user exists : Brandon
+2021-10-12 17:22:13 INFO  Service:32 - User: Brandon exists
+2021-10-12 17:22:13 INFO  Service:42 - Retrieving Employee information for : Brandon
+2021-10-12 17:22:13 INFO  Service:57 - Authenticated User: Brandon
+2021-10-12 17:22:13 INFO  Service:42 - Retrieving Employee information for : Brandon
+2021-10-12 17:22:13 INFO  Service:70 - Checking if Brandon is a Finance Manager
+2021-10-12 17:22:13 INFO  Service:74 - Authorized user as Manager: Brandon
+2021-10-12 17:22:14 INFO  Service:104 - Retrieving list of all reports for finance manager view
+2021-10-12 17:29:39 INFO  Service:29 - Verifying that user exists : Brandon
+2021-10-12 17:29:39 INFO  Service:32 - User: Brandon exists
+2021-10-12 17:29:39 INFO  Service:42 - Retrieving Employee information for : Brandon
+2021-10-12 17:29:40 INFO  Service:57 - Authenticated User: Brandon
+2021-10-12 17:29:40 INFO  Service:42 - Retrieving Employee information for : Brandon
+2021-10-12 17:29:40 INFO  Service:70 - Checking if Brandon is a Finance Manager
+2021-10-12 17:29:40 INFO  Service:74 - Authorized user as Manager: Brandon
+2021-10-12 17:29:41 INFO  Service:104 - Retrieving list of all reports for finance manager view
+2021-10-12 17:29:48 INFO  Service:104 - Retrieving list of all reports for finance manager view
+2021-10-12 17:29:52 INFO  Service:104 - Retrieving list of all reports for finance manager view
+2021-10-12 17:29:55 INFO  Service:104 - Retrieving list of all reports for finance manager view
