@@ -42,20 +42,20 @@ public class AuthenticateController {
 				ctx.sessionAttribute("user", em);
 				ctx.sessionAttribute("access","manager");
 			
-				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8080/manager");
+				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/manager");
 				
 				
 			}else{
 				ctx.sessionAttribute("user", em);
 			ctx.sessionAttribute("access","customer");
 		
-			ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8080/home");
+			ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/home");
 			}
 
 			
 		
 		}else {
-			ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8080/");
+			ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/");
 			
 		}
 			
