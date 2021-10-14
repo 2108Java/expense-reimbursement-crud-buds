@@ -71,7 +71,7 @@ public class RequestHandler {
 				ctx.req.getRequestDispatcher("EmployeePage.html").forward(ctx.req, ctx.res);
 			}else {
 				System.out.println("Login Failed");
-				ctx.res.sendRedirect("http://localhost:8000/");
+				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com/");
 			}
 		});
 		
@@ -81,7 +81,7 @@ public class RequestHandler {
 			if(checkManagerSession(ctx)) {
 				ctx.req.getRequestDispatcher("FinanceManager.html").forward(ctx.req, ctx.res);
 			}else {
-				ctx.res.sendRedirect("http://localhost:8000/");
+				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com/);
 			}
 			
 		});
@@ -98,7 +98,7 @@ public class RequestHandler {
 		app.post("/addReport", ctx -> {
 			if(checkSession(ctx)) {
 				uc.addReport(ctx);
-			ctx.redirect("http://localhost:8000/home");
+			ctx.redirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com/);
 			}
 			
 		});
@@ -138,7 +138,7 @@ public class RequestHandler {
 		app.post("/logOut", ctx -> {
 			ctx.consumeSessionAttribute("user");
 			ctx.consumeSessionAttribute("access");
-			ctx.redirect("http://localhost:8000/");
+			ctx.redirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com/");
 		});
 		
 		
