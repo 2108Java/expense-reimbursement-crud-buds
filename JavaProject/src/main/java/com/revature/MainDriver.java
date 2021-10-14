@@ -20,7 +20,8 @@ public class MainDriver {
 					staticFiles.directory = "/public";
 				}
 				)).start(8000);
-		 
+		
+		RequestHandler.setupEndPoints(app);	 
 	}
 
 }
