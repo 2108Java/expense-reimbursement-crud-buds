@@ -69,20 +69,30 @@ public class UserController {
 		//System.out.println(ctx.formParam("description"));
 		//System.out.println(ctx.formParam("type"));
 		//ReportList.add(rep);
+		if (!ctx.formParam("amount").isEmpty()) {
+			Float amount = Float.parseFloat(ctx.formParam("amount"));	
+			String description = ctx.formParam("description");
+			String reportType = ctx.formParam("type");
 		
-		rep.setAmount(Float.parseFloat(ctx.formParam("amount")));
-		rep.setDescription(ctx.formParam("description"));
-		rep.setReportType(ctx.formParam("type"));
-		rep.setEmployeeName(em.getUsername());
+			if(amount != null && !description.isEmpty() && !reportType.isEmpty()) {
+				rep.setAmount(amount);
+				rep.setDescription(description);
+				rep.setReportType(reportType);
+				rep.setEmployeeName(em.getUsername());
+				//System.out.println(rep.toString());
+				//System.out.println(rep.getEmployeeName());
 		
-		//System.out.println(rep.toString());
-		//System.out.println(rep.getEmployeeName());
+				if (service.createEmployeeReport(rep)) {
+					ctx.res.setStatus(200);
+				}else {
+					ctx.res.setStatus(400);
+					}
+				}
+			}
+	
 		
-		if (service.createEmployeeReport(rep)) {
-			ctx.res.setStatus(200);
-		}else {
-			ctx.res.setStatus(400);
-		}
+		
+		
 		
 
 		return em;

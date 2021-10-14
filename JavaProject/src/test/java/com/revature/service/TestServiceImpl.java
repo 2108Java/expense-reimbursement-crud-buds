@@ -23,7 +23,8 @@ public class TestServiceImpl {
 	private static Report newReport = new Report(1, 60, "travel", "gobletly gook",
 													"pending", "jeff");
 	private static Employee user = new Employee("Brandon","starfish");
-	private static Employee employee = new Employee("Brandon","starfish");
+	private static Employee employee = new Employee("Harley","starfish");
+	private static Employee employee2 = new Employee();
 	
 	
 	
@@ -40,9 +41,13 @@ public class TestServiceImpl {
 		Mockito.when(reDAO.updateReport(newReport)).thenReturn(true);
 		Mockito.when(reDAO.insertReport(newReport)).thenReturn(true);
 		Mockito.when(reDAO.selectEmployeeReports(1)).thenReturn(null);
+
 		Mockito.when(emDAO.isEmployee("Harley")).thenReturn(true);
 		Mockito.when(emDAO.isEmployee("Brandon")).thenReturn(true);
+		Mockito.when(emDAO.isEmployee("user")).thenReturn(false);
 		Mockito.when(emDAO.selectEmployeeByUsername(user)).thenReturn(employee);
+		Mockito.when(emDAO.selectEmployeeByUsername(employee2)).thenReturn(null);
+		Mockito.when(emDAO.selectEmployeeByUsername(employee)).thenReturn(user);
 
 	}
 
@@ -51,6 +56,8 @@ public class TestServiceImpl {
 		
 		System.out.println(serv.getEmployee(user));
 		assertNotNull(serv.getEmployee(user));
+		assertNull(serv.getEmployee(employee2));
+		assertNotNull(serv.getEmployee(employee));
 		
 	}
 	
@@ -58,6 +65,8 @@ public class TestServiceImpl {
 	public void testVerifyEmployeeExists() {
 		
 		assertTrue(serv.verifyEmployeeExists("Harley"));
+		assertTrue(serv.verifyEmployeeExists("Brandon"));
+		assertFalse(serv.verifyEmployeeExists("user"));
 	}
 	
 	@Test
@@ -65,6 +74,8 @@ public class TestServiceImpl {
 		
 		
 		assertTrue(serv.authenticateEmployee(user));
+		assertFalse(serv.authenticateEmployee(employee2));
+		assertTrue(serv.authenticateEmployee(employee));
 		
 	}
 	
@@ -74,6 +85,8 @@ public class TestServiceImpl {
 		user.setFinanceManager(true);
 		
 		assertTrue(serv.verifyManager(user));
+		assertFalse(serv.verifyManager(employee2));
+		assertFalse(serv.verifyManager(employee));
 	}
 	
 	@Test
@@ -81,6 +94,7 @@ public class TestServiceImpl {
 
 		
 		assertNotNull(serv.getEmployeeReports(user));
+
 		
 	}
 	

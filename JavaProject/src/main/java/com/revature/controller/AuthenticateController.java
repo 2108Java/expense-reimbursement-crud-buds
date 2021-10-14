@@ -35,7 +35,7 @@ public class AuthenticateController {
 		System.out.println(ctx.formParam("username"));
 		System.out.println(ctx.formParam("password"));
 		String page = "";
-	
+	if(!username.isEmpty() && !password.isEmpty()) {
 		if(service.authenticateEmployee(em)){
 			em = service.getEmployee(em);
 			if(service.verifyManager(em)) {
@@ -55,9 +55,14 @@ public class AuthenticateController {
 			
 		
 		}else {
+			//logger here
 			ctx.res.sendRedirect("http://localhost:8000/");
 			
 		}
+	}else {
+		//logger here
+		ctx.res.sendRedirect("http://localhost:8000/");
+	}
 			
 //		if(service.authenticate(ctx.queryParam(username))) What we would do in a full stack. 
 		
