@@ -81,7 +81,7 @@ public class RequestHandler {
 			if(checkManagerSession(ctx)) {
 				ctx.req.getRequestDispatcher("FinanceManager.html").forward(ctx.req, ctx.res);
 			}else {
-				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com/);
+				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com/");
 			}
 			
 		});
