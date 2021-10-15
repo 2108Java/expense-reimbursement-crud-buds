@@ -80,6 +80,8 @@ public class RequestHandler {
 			
 			if(checkManagerSession(ctx)) {
 				ctx.req.getRequestDispatcher("FinanceManager.html").forward(ctx.req, ctx.res);
+			}else if(checkSession(ctx)) {
+				ctx.res.sendRedirect("http://localhost:8000/home");
 			}else {
 				ctx.res.sendRedirect("http://localhost:8000/");
 			}
