@@ -5,7 +5,7 @@ function getReport(){ //getting a single report
 
 	let planetId = document.getElementById("planetId").value;
 	
-	let baseUrl = "http://localhost:8000/planet/";
+	let baseUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/planet/";
 	
 	let fullPlanetUrl = baseUrl +planetId;
 	
@@ -29,7 +29,7 @@ function getReport(){ //getting a single report
 
 function getAllReports(){ //getting all the reimbursement tickets
 	
-	let planetsUrl = "http://localhost:8000/reports";
+	let planetsUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/reports";
 
 	fetch(planetsUrl).then(function(response) {
   		response.json().then(function(users){	
