@@ -1,7 +1,5 @@
 console.log("Hello");
 
-let button = document.getElementById("reportSubmit");
-button.addEventListener('click',getAllReports);
 
 function getReport(){ //getting a single report
 
