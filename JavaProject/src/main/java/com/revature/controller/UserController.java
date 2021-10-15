@@ -2,6 +2,7 @@ package com.revature.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
 
 import org.eclipse.jetty.server.Authentication.User;
 
@@ -61,7 +62,7 @@ public class UserController {
 		return em;
 	}
 	
-	public Employee addReport(Context ctx) {
+	public Employee addReport(Context ctx)  throws IOException {
 		em = ctx.cachedSessionAttribute("user");
 		Report rep = new Report();
 		
