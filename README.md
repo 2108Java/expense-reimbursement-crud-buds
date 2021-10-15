@@ -1,10 +1,15 @@
 # expense-reimbursement-crud-buds
 # Project 1: Expense Reimbursement System
 
-Executive Summary
+##Executive Summary
 
 The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can log in and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement.
 
+## Purpose
+
+## Reuirements
+
+## User Stories
 Minimum Technical Requirements
 
 * Project code and package as to be appropriately structured (no spaghetti code) and utilize appropriate design patterns (e.g. DAO and Front-Controller Design pattern)
@@ -24,7 +29,7 @@ The application shall deploy onto a Server.
 
 * Unit test coverage, utilizing Mockito, JUnit, and Postman. 
 
-* Stretch Goal (Optional requirements)
+Stretch Goal (Optional requirements)
 
 * Deploy project entirely on AWS services, S3 Buckets, EC2, and RDS.
 
@@ -38,7 +43,7 @@ The application shall deploy onto a Server.
 
 Minimum Application Functionality
 
-	Employee
+Employee
 
 * I can log in to view past tickets (pending, approved rejected)
  
@@ -49,7 +54,7 @@ Minimum Application Functionality
 * Reimbursement ticket must specify the amount to be reimbursed and a description that the employee may add (in addition to the type) and a time stamp associated with it.
 
 
-	Finance Manager
+Finance Manager
 
 * As a finance manager, I can log in to view all the reimbursements for all employees.
 
