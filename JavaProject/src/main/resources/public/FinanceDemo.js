@@ -1,6 +1,6 @@
 function getReport(){ //getting a single report
 
-    let reportUrl = "http://localhost:8000/viewReport";
+    let reportUrl = "hhttp://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/viewReport";
 			// console.log(report[0].employeeName);
            let radios = document.getElementsByName("flexRadioDefault");
            radios = document.querySelector('input[name="flexRadioDefault"]:checked').value;
@@ -40,7 +40,7 @@ function getReport(){ //getting a single report
            }	
 }
 function rejectGetSelected(event){ //getting all the reimbursement tickets
-	let reportUrl = "http://localhost:8000/viewReport";
+	let reportUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/viewReport";
 	fetch(reportUrl).then(function(response) {
   		response.json().then(function(report){	
 			console.log(report);
@@ -51,7 +51,7 @@ function rejectGetSelected(event){ //getting all the reimbursement tickets
 }
 function approveGetSelected(event){ //getting all the reimbursement tickets
 	
-	let reportUrl = "http://localhost:8000/viewReport";
+	let reportUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/viewReport";
 	fetch(reportUrl).then(function(response) {
   		response.json().then(function(report){	
 			console.log(report);
@@ -227,7 +227,7 @@ function deleteTableRows(){
 function approve(report, event){
    console.log(event.srcElement.id);
 
-    let url = "http://localhost:8000/managerApproved/" + event.srcElement.id ;
+    let url = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/managerApproved/" + event.srcElement.id ;
 
     console.log(url);
 
@@ -253,7 +253,7 @@ function approve(report, event){
 function reject(report, event){
     console.log(event.srcElement.id);
 
-    let url = "http://localhost:8000/managerRejected/" + event.srcElement.id ;
+    let url = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/managerRejected/" + event.srcElement.id ;
 
     console.log(url);
 
