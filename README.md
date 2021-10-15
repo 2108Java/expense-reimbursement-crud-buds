@@ -23,7 +23,7 @@ Stretch Goal (Optional requirements)
 
 * Users can upload a document or image of their receipt when submitting reimbursements. 
 
-* The application will send an email to employees letting them know that they have been registered as a new user, giving them their temporary password 
+
 
 
 ## User Stories
@@ -37,6 +37,8 @@ Employee
 * Employees must select the type of reimbursement as LODGING, TRAVEL, FOOD, or OTHER.
 
 * Reimbursement ticket must specify the amount to be reimbursed and a description that the employee may add (in addition to the type) and a time stamp associated with it.
+
+* (Stretch Goal)The application will send an email to employees letting them know that they have been registered as a new user, giving them their temporary password 
 
 
 Finance Manager
