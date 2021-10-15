@@ -80,7 +80,7 @@ public class UserController {
 		//System.out.println(rep.getEmployeeName());
 		
 		if (service.createEmployeeReport(rep)) {
-			ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com/home");
+			ctx.res.setStatus(200);
 			//ctx.res.setStatus(200);
 		}else {
 			ctx.res.setStatus(400);
