@@ -1,37 +1,10 @@
 console.log("Hello");
 
-
-function getReport(){ //getting a single report
-
-	let planetId = document.getElementById("planetId").value;
-	
-	let baseUrl = "http://localhost:8000/planet/";
-	
-	let fullPlanetUrl = baseUrl +planetId;
-	
-	let xhttp = new XMLHttpRequest();
-	
-	xhttp.onreadystatechange = function(){
-		
-		if(this.status == 200 && this.readyState == 4){
-			//let planet = JSON.parse(this.responseText);
-			//console.log(planet);
-			
-			addRow(planet);
-		}
-	}
-	
-	xhttp.open("GET",fullPlanetUrl);
-	
-	xhttp.send();
-	
-}
-
 function getAllReports(){ //getting all the reimbursement tickets
 	
-	let planetsUrl = "http://localhost:8000/reports";
+	let reportsUrl = "http://localhost:8000/reports";
 
-	fetch(planetsUrl).then(function(response) {
+	fetch(reportsUrl).then(function(response) {
   		response.json().then(function(users){	
 			console.log(users);
 			console.log(users.reportList[1].reportId);
@@ -39,32 +12,7 @@ function getAllReports(){ //getting all the reimbursement tickets
   		});
 	}).catch(err => console.error(err));
 	
-	// let xhttp = new XMLHttpRequest();
-	
-	// xhttp.onreadystatechange = function (){ 
-	// 	//fat arrow notation does not support "this" keyword
-		
-	// 	// console.log(this.readyState);
-		
-	// 	if(this.readyState == 4 && this.status == 200){
-			
-			
-    //         let user = JSON.parse(this.responseText);
-			
-    //         console.log(user);
-    //         console.log(user.reportList[1].reportId);
-	// 		 addAllPlanets(user);
-	// 	}
-	// }
-	
-	// xhttp.open("GET",planetsUrl);
-	
-	// xhttp.send();
-	
 }
-
-// let button = document.getElementById("planetSubmit");
-// button.addEventListener('click',getPlanet);
 
 window.onload = function(){
 
@@ -76,7 +24,6 @@ window.onload = function(){
 function addRow(user, report){
     //Append this onto my table, 
     
-   
     let tableBody = document.getElementById("employeeTableBody");
 
     //Creating a table row
