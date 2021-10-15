@@ -98,7 +98,9 @@ public class RequestHandler {
 		app.post("/addReport", ctx -> {
 			if(checkSession(ctx)) {
 				uc.addReport(ctx);
+				ctx.redirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/home");
 			}
+
 			
 		});
 		
