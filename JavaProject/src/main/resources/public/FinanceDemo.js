@@ -1,6 +1,6 @@
 function getReport(){ //getting a single report
 
-    let reportUrl = "hhttp://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/viewReport";
+    let reportUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/viewReport";
 			// console.log(report[0].employeeName);
            let radios = document.getElementsByName("flexRadioDefault");
            radios = document.querySelector('input[name="flexRadioDefault"]:checked').value;
