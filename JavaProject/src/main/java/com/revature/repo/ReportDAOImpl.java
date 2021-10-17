@@ -23,8 +23,8 @@ public class ReportDAOImpl implements ReportDAO{
 		boolean success = false;
 		
 		String sql = "insert into expense_reports (employee_id, expense_type, description,  amount) values ((select employee_id from employee where username = ? ),?,?,?)";
-		try{
-			Connection connection = comm.connection();
+		try(Connection connection = comm.connection();){
+			loggy.info("Successful connection to DB");
 			
 			PreparedStatement ps = connection.prepareStatement(sql);
 	
@@ -36,7 +36,10 @@ public class ReportDAOImpl implements ReportDAO{
 			ps.execute();
 					
 			success = true;
-					
+			
+			loggy.info("Closing DB connection");
+			connection.close();
+			
 		}catch(SQLException e) {
 			success = false;
 			loggy.info("insertReport SQL Exception: "+e.getMessage());		
@@ -51,29 +54,32 @@ public class ReportDAOImpl implements ReportDAO{
 		List<Report> reportList = new ArrayList<Report>();
 		
 		try(Connection connection = comm.connection()){
+			loggy.info("Successful connection to DB");
 		
-		String sql = "SELECT * FROM expense_reports where employee_id = ? order by creation_time asc";
-		PreparedStatement ps = connection.prepareStatement(sql);
+			String sql = "SELECT * FROM expense_reports where employee_id = ? order by creation_time asc";
+			PreparedStatement ps = connection.prepareStatement(sql);
 		
-		ps.setInt(1, employeeId);
-		ps.execute();
+			ps.setInt(1, employeeId);
+			ps.execute();
 		
-		ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 		
-		while(rs.next()) {
-			Report tempReport = new Report();
+			while(rs.next()) {
+				Report tempReport = new Report();
 			
-			tempReport.setReportId(rs.getInt("report_id"));
-			tempReport.setAmount(rs.getInt("amount"));
-			tempReport.setReportType(rs.getString("expense_type"));
-			tempReport.setDescription(rs.getString("description"));
-			tempReport.setApprovalStatus(rs.getString("approval_status"));
-			tempReport.setTimestamp(rs.getString("creation_time"));
+				tempReport.setReportId(rs.getInt("report_id"));
+				tempReport.setAmount(rs.getInt("amount"));
+				tempReport.setReportType(rs.getString("expense_type"));
+				tempReport.setDescription(rs.getString("description"));
+				tempReport.setApprovalStatus(rs.getString("approval_status"));
+				tempReport.setTimestamp(rs.getString("creation_time"));
 			
-			reportList.add(tempReport);
+				reportList.add(tempReport);
 			
-		}
-		connection.close();
+			}
+		
+			loggy.info("Closing DB connection");
+			connection.close();
 			
 		}catch(SQLException e) {
 			loggy.info("selectEmployeeReports SQL Exception: "+e.getMessage());
@@ -88,30 +94,32 @@ public class ReportDAOImpl implements ReportDAO{
 		List<Report> reportList = new ArrayList<Report>();
 		
 		try(Connection connection = comm.connection()){
-		
-		String sql = "SELECT * FROM expense_reports LEFT JOIN employee ON expense_reports.employee_id = employee.employee_id WHERE approval_status = ? ORDER BY creation_time ASC";
-		PreparedStatement ps = connection.prepareStatement(sql);
-		
-		ps.setString(1 ,reimbursementType);
-		ps.execute();
-		
-		ResultSet rs = ps.executeQuery();
-		
-		while(rs.next()) {
-			Report tempReport = new Report();
+			loggy.info("Successful connection to DB");
 			
-			tempReport.setReportId(rs.getInt("report_id"));
-			tempReport.setAmount(rs.getInt("amount"));
-			tempReport.setReportType(rs.getString("expense_type"));
-			tempReport.setDescription(rs.getString("description"));
-			tempReport.setApprovalStatus(rs.getString("approval_status"));
-			tempReport.setEmployeeName(rs.getString("username"));
-			tempReport.setTimestamp(rs.getString("creation_time"));
+			String sql = "SELECT * FROM expense_reports LEFT JOIN employee ON expense_reports.employee_id = employee.employee_id WHERE approval_status = ? ORDER BY creation_time ASC";
+			PreparedStatement ps = connection.prepareStatement(sql);
+		
+			ps.setString(1 ,reimbursementType);
+			ps.execute();
+		
+			ResultSet rs = ps.executeQuery();
+		
+			while(rs.next()) {
+				Report tempReport = new Report();
 			
-			reportList.add(tempReport);
+				tempReport.setReportId(rs.getInt("report_id"));
+				tempReport.setAmount(rs.getInt("amount"));
+				tempReport.setReportType(rs.getString("expense_type"));
+				tempReport.setDescription(rs.getString("description"));
+				tempReport.setApprovalStatus(rs.getString("approval_status"));
+				tempReport.setEmployeeName(rs.getString("username"));
+				tempReport.setTimestamp(rs.getString("creation_time"));
 			
-		}
-		connection.close();
+				reportList.add(tempReport);
+			
+			}
+			loggy.info("Closing DB connection");
+			connection.close();
 			
 		}catch(SQLException e) {
 			loggy.info("selectReportsByType SQL Exception: "+e.getMessage());
@@ -126,29 +134,31 @@ public class ReportDAOImpl implements ReportDAO{
 		List<Report> reportList = new ArrayList<Report>();
 		
 		try(Connection connection = comm.connection()){
-		
-		String sql = "SELECT * FROM expense_reports LEFT JOIN employee ON expense_reports.employee_id = employee.employee_id ORDER BY creation_time ASC";
-		PreparedStatement ps = connection.prepareStatement(sql);
-		
-		ps.execute();
-		
-		ResultSet rs = ps.executeQuery();
-		
-		while(rs.next()) {
-			Report tempReport = new Report();
+			loggy.info("Successful connection to DB");
 			
-			tempReport.setReportId(rs.getInt("report_id"));
-			tempReport.setAmount(rs.getInt("amount"));
-			tempReport.setReportType(rs.getString("expense_type"));
-			tempReport.setDescription(rs.getString("description"));
-			tempReport.setApprovalStatus(rs.getString("approval_status"));
-			tempReport.setEmployeeName(rs.getString("username"));
-			tempReport.setTimestamp(rs.getString("creation_time"));
+			String sql = "SELECT * FROM expense_reports LEFT JOIN employee ON expense_reports.employee_id = employee.employee_id ORDER BY creation_time ASC";
+			PreparedStatement ps = connection.prepareStatement(sql);
+		
+			ps.execute();
+		
+			ResultSet rs = ps.executeQuery();
+		
+			while(rs.next()) {
+				Report tempReport = new Report();
 			
-			reportList.add(tempReport);
+				tempReport.setReportId(rs.getInt("report_id"));
+				tempReport.setAmount(rs.getInt("amount"));
+				tempReport.setReportType(rs.getString("expense_type"));
+				tempReport.setDescription(rs.getString("description"));
+				tempReport.setApprovalStatus(rs.getString("approval_status"));
+				tempReport.setEmployeeName(rs.getString("username"));
+				tempReport.setTimestamp(rs.getString("creation_time"));
 			
-		}
-		connection.close();
+				reportList.add(tempReport);
+			
+			}
+			loggy.info("Closing DB connection");
+			connection.close();
 			
 		}catch(SQLException e) {
 			loggy.info("selectAllReports SQL Exception: "+e.getMessage());
@@ -165,6 +175,7 @@ public class ReportDAOImpl implements ReportDAO{
 		String newStatus = report.getApprovalStatus();
 		
 		try(Connection connection = comm.connection()){
+			loggy.info("Successful connection to DB");
 			
 			String sql = "UPDATE expense_reports SET approval_status = ? WHERE report_id = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
@@ -175,13 +186,14 @@ public class ReportDAOImpl implements ReportDAO{
 			
 			success = true;
 			
+			loggy.info("Closing DB connection");
 			connection.close();
 				
-			}catch(SQLException e) {
-				loggy.info("updateReport SQL Exception: "+e.getMessage());
-			}
+		}catch(SQLException e) {
+			loggy.info("updateReport SQL Exception: "+e.getMessage());
+		}
 
-		return success;
+	return success;
 	}
 
 }

@@ -3,7 +3,7 @@ package com.revature.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jetty.server.Authentication.User;
+import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -21,6 +21,8 @@ import io.javalin.http.Context;
 
 public class UserController {
 	
+	private static final Logger loggy = Logger.getLogger(UserController.class);
+	
 	private EmployeeDAO emDao = new EmployeeDAOImpl();
 	private ReportDAO reDao = new ReportDAOImpl();
 	private Service service = new ServiceImpl(emDao,reDao);
@@ -32,157 +34,124 @@ public class UserController {
 	
 	Employee em = new Employee();
 	List<Report> reportList = new ArrayList<>();
-	public Employee initalizeList() {
-		
-		
-		
-		reportList.add(0, new Report(1, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		reportList.add(1, new Report(2, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		reportList.add(2, new Report(3, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		reportList.add(3, new Report(4, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		reportList.add(4, new Report(5, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		reportList.add(5, new Report(6, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		reportList.add(6, new Report(7, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		reportList.add(7, new Report(8, 700,  "TRAVEL", "Plane Ticket", "2021-10-06 18:59:56", "Pending"));
-		em.setUsername("Harley");
-		em.setPassword("starfish");
-		em.setReportList(reportList);
-		return em;
-	}
 
+	//Get all reports for current user from DB. Reports will be displayed on current users home page.
 	public Employee getAllReports(Context ctx) {
 		ctx.sessionAttribute("user");
 		
 		em = ctx.cachedSessionAttribute("user");
 		em = service.getEmployeeReports(em);
 		
-		//em = (Employee) JSON.parse(sess);
+		loggy.info("Gathered current employee reports");
 		ctx.res.setStatus(200);
 		return em;
 	}
 	
+	//Converts front-end input to a Report object. New report object is then stored in the DB. 
 	public Employee addReport(Context ctx) {
 		em = ctx.cachedSessionAttribute("user");
+		loggy.info("Initializing new report for user: "+em.getUsername());
+		
 		Report rep = new Report();
 		
-		//System.out.println(ctx.formParam("amount"));
-		//System.out.println(ctx.formParam("description"));
-		//System.out.println(ctx.formParam("type"));
-		//ReportList.add(rep);
 		if (!ctx.formParam("amount").isEmpty()) {
-			Float amount = Float.parseFloat(ctx.formParam("amount"));	
+			Float amount = Float.parseFloat(ctx.formParam("amount"));
+			loggy.info("Report amount set to: "+amount);
+			
 			String description = ctx.formParam("description");
+			loggy.info("Report description set to: "+description);
+			
 			String reportType = ctx.formParam("type");
+			loggy.info("Report type set to: "+reportType);
 		
 			if(amount != null && !description.isEmpty() && !reportType.isEmpty()) {
 				rep.setAmount(amount);
 				rep.setDescription(description);
 				rep.setReportType(reportType);
 				rep.setEmployeeName(em.getUsername());
-				//System.out.println(rep.toString());
-				//System.out.println(rep.getEmployeeName());
-		
+				
 				if (service.createEmployeeReport(rep)) {
 					ctx.res.setStatus(200);
+					loggy.info("Report successfully added");
 				}else {
 					ctx.res.setStatus(400);
+					loggy.info("Error adding report to DB");
 					}
 				}
 			}
 	
-		
-		
-		
-		
-
 		return em;
 	}
-	
+
+	//Get a list all reports from DB for manger view. 
 	public List<Report> viewAllReports(Context ctx) {
-		
-		
 		reportList = service.getAllReports();
-		
+		loggy.info("Returning report list to manager");
 		return reportList;
 	}
 
+	//Changes the report type view based on manager input
 	public void viewSelect(Context ctx) {
-		
 		String selector = ctx.formParam("flexRadioDefault");
-		
-		System.out.println(selector);
-		
+		loggy.info("Manager changed view type to:"+selector);
 		
 		reportList = service.getReportsByType(selector);
-		
-		System.out.println(reportList);
-		
-		
 	}
 
+	//Uses manager input to change a single report status to 'Approved' and updates info in DB
 	public void updateStatusApproved(Context ctx) {
-		// TODO Auto-generated method stub
 		Report re = null;
-		
 		ObjectMapper om = new ObjectMapper();
-		
 		String reportJSONText = ctx.body();
 		
 		try {
 			re = om.readValue(reportJSONText, Report.class);
 			re.setApprovalStatus("Approved");
-			System.out.println(re);
+			
 			boolean success = service.updateReportStatus(re);
 		if(success) {
+			loggy.info("Report status had been updated to 'Approved'");
 			ctx.res.setStatus(200);
 			
 		}else {
+			loggy.info("Report status update failed");
 			ctx.res.setStatus(402);
 		}
+		
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			loggy.info("updateStatusApproved Json Mapping Exception: "+e.getMessage());	
 			ctx.res.setStatus(401);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			loggy.info("updateStatusApproved Json Proccessing Exception: "+e.getMessage());	
 			ctx.res.setStatus(500);
-			e.printStackTrace();
 		}	
 	}
 	
+	//Uses manager input to change a single report status to 'Rejected' and updates info in DB
 	public void updateStatusRejected(Context ctx) {
-		// TODO Auto-generated method stub
 		Report re = null;
-		
 		ObjectMapper om = new ObjectMapper();
-		
 		String reportJSONText = ctx.body();
-		
-		System.out.println(om);
-		System.out.println(reportJSONText);
 		
 		try {
 			re = om.readValue(reportJSONText, Report.class);
-			System.out.println(re);
 			re.setApprovalStatus("Rejected");
-			
-			System.out.println(re);
 			
 			boolean success = service.updateReportStatus(re);
 		if(success) {
+			loggy.info("Report status had been updated to 'Rejected'");
 			ctx.res.setStatus(200);
-			
 		}else {
+			loggy.info("Report status update failed");
 			ctx.res.setStatus(402);
 		}
+		
 		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			loggy.info("updateStatusRejected Json Mapping Exception: "+e.getMessage());	
 			ctx.res.setStatus(401);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
+			loggy.info("updateStatusRejected Json Proccessing Exception: "+e.getMessage());	
 			ctx.res.setStatus(500);
-			e.printStackTrace();
 		}	
 	}
 

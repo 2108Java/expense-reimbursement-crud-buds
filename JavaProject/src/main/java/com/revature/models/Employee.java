@@ -10,7 +10,6 @@ public class Employee {
 	private String password;
 	private boolean isFinanceManager;
 	private List<Report> reportList;
-	//private String email;
 	
 	//Constructors
 	
