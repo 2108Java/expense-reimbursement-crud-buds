@@ -7,12 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.revature.models.Report;
 import com.revature.util.Communication;
+
 
 public class ReportDAOImpl implements ReportDAO{
 	Communication comm = new Communication();
 	
+	private static final Logger loggy = Logger.getLogger(ReportDAO.class);
 	
 	@Override
 	public boolean insertReport(Report report) {
@@ -35,7 +39,7 @@ public class ReportDAOImpl implements ReportDAO{
 					
 		}catch(SQLException e) {
 			success = false;
-			e.printStackTrace();		
+			loggy.info("insertReport SQL Exception: "+e.getMessage());		
 		}
 	return success;
 	}
@@ -72,7 +76,7 @@ public class ReportDAOImpl implements ReportDAO{
 		connection.close();
 			
 		}catch(SQLException e) {
-			e.printStackTrace();
+			loggy.info("selectEmployeeReports SQL Exception: "+e.getMessage());
 		}
 		
 	return reportList;
@@ -110,7 +114,7 @@ public class ReportDAOImpl implements ReportDAO{
 		connection.close();
 			
 		}catch(SQLException e) {
-			e.printStackTrace();
+			loggy.info("selectReportsByType SQL Exception: "+e.getMessage());
 		}
 		
 	return reportList;
@@ -147,7 +151,7 @@ public class ReportDAOImpl implements ReportDAO{
 		connection.close();
 			
 		}catch(SQLException e) {
-			e.printStackTrace();
+			loggy.info("selectAllReports SQL Exception: "+e.getMessage());
 		}
 		
 	return reportList;
@@ -174,7 +178,7 @@ public class ReportDAOImpl implements ReportDAO{
 			connection.close();
 				
 			}catch(SQLException e) {
-				e.printStackTrace();
+				loggy.info("updateReport SQL Exception: "+e.getMessage());
 			}
 
 		return success;
