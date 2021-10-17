@@ -1,20 +1,19 @@
 package com.revature;
 
 import com.revature.controller.RequestHandler;
-import com.revature.controller.UserController;
-import com.revature.models.Employee;
-import com.revature.repo.EmployeeDAO;
-import com.revature.repo.EmployeeDAOImpl;
-import com.revature.repo.ReportDAO;
-import com.revature.repo.ReportDAOImpl;
-import com.revature.service.Service;
-import com.revature.service.ServiceImpl;
+
+import org.apache.log4j.Logger;
 
 import io.javalin.Javalin;
 
 public class MainDriver {
 
+	private static final Logger loggy = Logger.getLogger(MainDriver.class);
+	
 	public static void main(String[] args) {
+		
+		 loggy.info("Running Main Driver...");
+		 loggy.info("Initializing Javalin...");
 		
 		 Javalin app = Javalin.create(config -> config.addStaticFiles(
 					staticFiles ->
@@ -23,6 +22,7 @@ public class MainDriver {
 					}
 					)).start(8000);
 		 
+		 loggy.info("Setting Up Endpoints...");
 		 RequestHandler.setupEndPoints(app);
 	}
 
