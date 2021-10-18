@@ -90,8 +90,9 @@ public class RequestHandler {
 				loggy.info("Forwarding to EmployeePage.html");
 				ctx.req.getRequestDispatcher("EmployeePage.html").forward(ctx.req, ctx.res);
 			}else {
-				loggy.info("Redirecting...");
-				ctx.res.sendRedirect("http://localhost:8000/");
+
+				System.out.println("Login Failed");
+				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/");
 			}
 		});
 		
@@ -103,10 +104,11 @@ public class RequestHandler {
 				ctx.req.getRequestDispatcher("FinanceManager.html").forward(ctx.req, ctx.res);
 			}else if(checkSession(ctx)) {
 				loggy.info("Redirecting to Employee home...");
-				ctx.res.sendRedirect("http://localhost:8000/home");
+				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/home");
 			}else {
-				loggy.info("Redirecting...");
-				ctx.res.sendRedirect("http://localhost:8000/");
+
+        loggy.info("Redirecting...");
+				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com/");
 			}
 			
 		});
@@ -125,10 +127,12 @@ public class RequestHandler {
 			if(checkSession(ctx)) {
 				loggy.info("Attempting to add report...");
 				uc.addReport(ctx);
-				
-				loggy.info("Refreshing page");
-				ctx.redirect("http://localhost:8000/home");
+
+        loggy.info("Refreshing page");
+				ctx.redirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/home");
+
 			}
+
 			
 		});
 		
@@ -173,9 +177,10 @@ public class RequestHandler {
 			loggy.info("Consuming session data");
 			ctx.consumeSessionAttribute("user");
 			ctx.consumeSessionAttribute("access");
-			
-			loggy.info("Redirecting...");
-			ctx.redirect("http://localhost:8000/");
+
+      loggy.info("Redirecting...");
+			ctx.redirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/");
+
 		});
 		
 		

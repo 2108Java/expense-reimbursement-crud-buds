@@ -2,6 +2,7 @@ package com.revature.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.IOException;
 
 import org.apache.log4j.Logger;
 
@@ -49,10 +50,9 @@ public class UserController {
 	
 	//Converts front-end input to a Report object. New report object is then stored in the DB. 
 	public Employee addReport(Context ctx) {
+    Report rep = new Report();
 		em = ctx.cachedSessionAttribute("user");
 		loggy.info("Initializing new report for user: "+em.getUsername());
-		
-		Report rep = new Report();
 		
 		if (!ctx.formParam("amount").isEmpty()) {
 			Float amount = Float.parseFloat(ctx.formParam("amount"));

@@ -1,34 +1,38 @@
 function getReport(){ //getting a single report
 
-    let reportUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/viewReport";
-
+    let reportUrl = "http://localhost:8000/viewReport";
 			// console.log(report[0].employeeName);
            let radios = document.getElementsByName("flexRadioDefault");
            radios = document.querySelector('input[name="flexRadioDefault"]:checked').value;
+           console.log(radios);
            if(radios == 'All'){
             fetch(reportUrl).then(function(response) {
-                response.json().then(function(report){	            
+                response.json().then(function(report){	
+                console.log(report);             
                 deleteTableRows();   
                 addAllReports(report);           
               });
           }).catch(err => console.error(err));
            }else if(radios == 'Rejected') {
             fetch(reportUrl).then(function(response) {
-                response.json().then(function(report){	           
+                response.json().then(function(report){	
+                console.log(report);             
                 deleteTableRows();    
                 addAllRejected(report);          
               });
           }).catch(err => console.error(err));     
            }else if(radios == 'Pending'){
                 fetch(reportUrl).then(function(response) {
-                                response.json().then(function(report){	                            
+                                response.json().then(function(report){	
+                                console.log(report);                             
                                 deleteTableRows();                    
                                 addAllPending(report);                         
                               });
                           }).catch(err => console.error(err));
            }else{              
             fetch(reportUrl).then(function(response) {
-                response.json().then(function(report){	            
+                response.json().then(function(report){	
+                console.log(report);            
                 deleteTableRows();  
                 addAllApproved(report);         
               });
@@ -36,33 +40,44 @@ function getReport(){ //getting a single report
            }	
 }
 function rejectGetSelected(event){ //getting all the reimbursement tickets
-	let reportUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/viewReport";
+	let reportUrl = "http://localhost:8000/viewReport";
 	fetch(reportUrl).then(function(response) {
   		response.json().then(function(report){	
+			console.log(report);
+			
 			reject(report,event);
   		});
 	}).catch(err => console.error(err));
 }
 function approveGetSelected(event){ //getting all the reimbursement tickets
 	
-	let reportUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/viewReport";
+	let reportUrl = "http://localhost:8000/viewReport";
 	fetch(reportUrl).then(function(response) {
   		response.json().then(function(report){	
+			console.log(report);
+			
 			approve(report,event);
   		});
 	}).catch(err => console.error(err));
 }
 let button = document.getElementById("viewSubmit");
 button.addEventListener('click',getReport);
+
 window.onload = function(){
-	getReport(); 	
+
+	getReport(); 
+	
 //This functions get invoked when the page is loaded in!
 }
+
 function addRow(report){
     //Append this onto my table, 
+
     let tableBody = document.getElementById("employeeTableBody");
+
     //Creating a table row
     let tableRow = document.createElement("tr");
+
     //Create the columns 
     let idColumn = document.createElement("td");
     let nameColumn = document.createElement("td");
@@ -71,7 +86,9 @@ function addRow(report){
     let amountColumn = document.createElement("td");
 	let timeColumn = document.createElement("td");
 	let statusColumn = document.createElement("td");
+	
 	//assigning the "text value" to our columns 
+
     idColumn.innerText = report.reportId;
     nameColumn.innerText = report.employeeName;
 	typeColumn.innerText = report.reportType
@@ -79,6 +96,7 @@ function addRow(report){
     amountColumn.innerText = report.amount;
 	timeColumn.innerText = report.timestamp;
 	statusColumn.innerText = report.approvalStatus;
+
     //attach the columns to our newly created row 
     tableRow.appendChild(idColumn);
     tableRow.appendChild(nameColumn);
@@ -87,14 +105,22 @@ function addRow(report){
  	tableRow.appendChild(amountColumn);
  	tableRow.appendChild(timeColumn);
  	tableRow.appendChild(statusColumn);
+
+
     //attach the row itself to the table
-    tableBody.appendChild(tableRow);	
+    tableBody.appendChild(tableRow);
+	
 }
+
 function addRowPending(report){
     //Append this onto my table, 
+    
+   
     let tableBody = document.getElementById("employeeTableBody");
+
     //Creating a table row
     let tableRow = document.createElement("tr");
+
     //Create the columns
     let idColumn = document.createElement("td");
     let nameColumn = document.createElement("td");
@@ -105,21 +131,26 @@ function addRowPending(report){
 	let statusColumn = document.createElement("td");
     let rejectBtnColumn = document.createElement("td");
     let approveBtnColumn = document.createElement("td");
-    //assign the reject button
+
+    //assign the button
     let rejectBtn = document.createElement("input");
     rejectBtn.type = "button";
     rejectBtn.value = "Reject";
     rejectBtn.setAttribute("id",report.reportId);
     rejectBtn.addEventListener('click', rejectGetSelected);
     rejectBtnColumn.appendChild(rejectBtn);
-    //assign the approve button
+    
     let approveBtn = document.createElement("input");
     approveBtn.type = "button";
     approveBtn.value = "Approve";
     approveBtn.setAttribute("id",report.reportId);
     approveBtn.addEventListener('click', approveGetSelected);
     approveBtnColumn.appendChild(approveBtn);
+
+
+
     //assigning the "text value" to our columns 
+
     idColumn.innerText = report.reportId;
     nameColumn.innerText = report.employeeName;
 	typeColumn.innerText = report.reportType
@@ -127,6 +158,7 @@ function addRowPending(report){
     amountColumn.innerText = report.amount;
 	timeColumn.innerText = report.timestamp;
 	statusColumn.innerText = report.approvalStatus;
+
     //attach the columns to our newly created row 
     tableRow.appendChild(idColumn);
     tableRow.appendChild(nameColumn);
@@ -137,38 +169,54 @@ function addRowPending(report){
  	tableRow.appendChild(statusColumn);
     tableRow.appendChild(rejectBtnColumn);
     tableRow.appendChild(approveBtnColumn);
+
     //attach the row itself to the table
     tableBody.appendChild(tableRow);
 	
 }
-function addAllReports(user){	
+
+
+function addAllReports(user){
+	
 	for(let report of user){
+        console.log(report.approvalStatus);
 		addRow( report);
-	}	
+	}
+	
+
 }
 
-function addAllPending(user){	
+function addAllPending(user){
+	
 	for(let report of user){
         if(report.approvalStatus == "Pending"){
+            // console.log(report.approvalStatus);
             addRowPending( report);
         }	
 	}
 }
-function addAllRejected(user){	
+
+function addAllRejected(user){
+	
 	for(let report of user){
-        if(report.approvalStatus == "Rejected"){          
+        if(report.approvalStatus == "Rejected"){
+            // console.log(report.approvalStatus);
             addRow( report);
         }	
 	}
 }
-function addAllApproved(user){	
+
+function addAllApproved(user){
+	
 	for(let report of user){
         if(report.approvalStatus == "Approved"){
+            // console.log(report.approvalStatus);
             addRow( report);
         }	
 	}
 }
 function deleteTableRows(){
+
     let tableHeaderRowCount = 0;
     let table = document.getElementById('employeeTableBody');
     let rowCount = table.rows.length;
@@ -176,38 +224,57 @@ function deleteTableRows(){
         table.deleteRow(tableHeaderRowCount);
     }
 }
-
 function approve(report, event){
-    let url = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/managerApproved/" + event.srcElement.id ;
+   console.log(event.srcElement.id);
+
+    let url = "http://localhost:8000/managerApproved/" + event.srcElement.id ;
+
+    console.log(url);
+
     let xhttp = new XMLHttpRequest();
 	
-	  xhttp.onreadystatechange = function (){ 		
+	xhttp.onreadystatechange = function (){ 		
+		console.log(this.readyState);
 		if(this.readyState == 4 && this.status == 200){
 			 getReport();
 		}
 	}
 	for(let reportId of report){
-        if(reportId.reportId == event.srcElement.id){				
-			 	xhttp.open("PUT",url);	
-	            xhttp.send(JSON.stringify(reportId));
-			 }
-		 }
+        if(reportId.reportId == event.srcElement.id){
+				console.log(reportId)
+			 	xhttp.open("PUT",url);
+	
+	            xhttp.send(JSON.stringify(reportId))
+			}
+		}
 
-	}
+		}
 
 function reject(report, event){
-    let url = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/managerRejected/" + event.srcElement.id ;
+    console.log(event.srcElement.id);
+
+    let url = "http://localhost:8000/managerRejected/" + event.srcElement.id ;
+
+    console.log(url);
+
     let xhttp = new XMLHttpRequest();
 	
-	  xhttp.onreadystatechange = function (){ 						
+	xhttp.onreadystatechange = function (){ 		
+		console.log(this.readyState);
+		
 		if(this.readyState == 4 && this.status == 200){
-			 getReport();			
+			 getReport();
+			
 		}
+
 	}
 	for(let reportId of report){
         if(reportId.reportId == event.srcElement.id){
+				console.log(reportId)
+
                 xhttp.open("PUT",url);
-	            xhttp.send(JSON.stringify(reportId));
+	
+	            xhttp.send(JSON.stringify(reportId))
 			}
 		}
 	}
