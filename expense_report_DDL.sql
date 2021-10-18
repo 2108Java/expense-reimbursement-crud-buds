@@ -11,7 +11,7 @@ create table expense_reports (
 	report_id serial primary key,
 	amount numeric not null,
 	expense_type varchar(10) not null,--4 states are lodging, travel, food, or other-- 
-	creation_time timestamp default current_timestamp , --date format example '2004-10-19 10:23:54'--
+	creation_time timestamp(0) default current_timestamp , --date format example '2004-10-19 10:23:54'--
 	approval_status varchar(10) default 'Pending', --3 states are pending, approved, or denied--
 	employee_id int REFERENCES employee(employee_id),
 	description varchar(60) not null

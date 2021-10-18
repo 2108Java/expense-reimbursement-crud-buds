@@ -19,9 +19,21 @@ public class Report {
 	public Report() {
 		super();
 	}
-
+	public Report(int reportId, float amount, String reportType, String description, String timestamp,
+			String approvalStatus, String employeeName) {
+		super();
+		this.reportId = reportId;
+		this.amount = amount;
+		this.reportType = reportType;
+		this.description = description;
+		this.timestamp = timestamp;
+		this.approvalStatus = approvalStatus;
+		this.employeeName = employeeName;
+	}
 	//Getters and Setters
 	
+	
+
 	public Report(int reportId, float amount, String reportType, String description, String timestamp,
 			String approvalStatus) {
 		super();

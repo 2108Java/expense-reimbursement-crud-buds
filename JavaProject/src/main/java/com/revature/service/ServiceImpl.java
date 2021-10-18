@@ -39,8 +39,11 @@ public class ServiceImpl implements Service{
 	
 	@Override
 	public Employee getEmployee(Employee user) {
+		Employee employee = new Employee();
 		loggy.info("Retrieving Employee information for : "+ user.getUsername());
-		return emDao.selectEmployeeByUsername(user);
+		
+		employee = emDao.selectEmployeeByUsername(user);
+		return employee;
 	}
 	
 	@Override
@@ -94,7 +97,11 @@ public class ServiceImpl implements Service{
 	public boolean createEmployeeReport(Report newReport) {
 		loggy.info("Creating new expense report for current user in database");
 		loggy.info(newReport.toString());
-		return reDao.insertReport(newReport);
+		boolean success = false;
+		if(reDao.insertReport(newReport)) {
+			success = true;
+		}
+		return success;
 	}
 
 
