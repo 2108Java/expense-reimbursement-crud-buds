@@ -2,7 +2,7 @@ console.log("Hello");
 
 function getAllReports(){ //getting all the reimbursement tickets
 	
-	let planetsUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/reports";
+	let reportsUrl = "http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/reports";
 
 	fetch(reportsUrl).then(function(response) {
   		response.json().then(function(users){	
