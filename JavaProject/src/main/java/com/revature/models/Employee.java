@@ -10,7 +10,6 @@ public class Employee {
 	private String password;
 	private boolean isFinanceManager;
 	private List<Report> reportList;
-	//private String email;
 	
 	//Constructors
 	
@@ -18,9 +17,24 @@ public class Employee {
 		super();
 	}
 
+	public Employee(int employeeID, String username, String password, boolean isFinanceManager,
+			List<Report> reportList) {
+		super();
+		this.employeeID = employeeID;
+		this.username = username;
+		this.password = password;
+		this.isFinanceManager = isFinanceManager;
+		this.reportList = reportList;
+	}
 	
+	
+	public Employee(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
 	//Getters and Setters
-	
+
 	public String getUsername() {
 		return username;
 	}

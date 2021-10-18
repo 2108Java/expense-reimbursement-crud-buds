@@ -1,30 +1,21 @@
 # expense-reimbursement-crud-buds
 # Project 1: Expense Reimbursement System
 
-Executive Summary
+## Executive Summary
 
 The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can log in and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement.
 
-Minimum Technical Requirements
+## Reuirements
+1. Use three tier design architecture.
+2. Data is stored in a database using amazon web services.
+3. All tables need to be in 3rd Normal Form.
+4. Must use servlet technology on the middle tier.
+5. Must use JUnit test on the service class(s) and Postman to test endpoints.
+6. Front end will use JavaScript and AJAX to call for server side components.
+7. Must use JDBC to talk to database.
+8. Logging must be implemented with Log4j and not by java.
 
-* Project code and package as to be appropriately structured (no spaghetti code) and utilize appropriate design patterns (e.g. DAO and Front-Controller Design pattern)
-
-* All tables must be in at least 3rd Normal Form.
-
-* The back-end system shall use JDBC to connect to a PostgreSQL database, hosted on AWS RDS.
-
-* Use at least one PreparedStatement or CallableStatement
-The application shall deploy onto a Server.
-
-* The middle tier shall use Servlet technology for dynamic Web application development.
-
-* The front-end view will use JavaScript and AJAX to call server-side components. The web pages should look presentable (utilizing a combination of CSS and Bootstrap)
-
-* Logging has to be implemented, utilizing an external logging framework (e.g. Log4J)
-
-* Unit test coverage, utilizing Mockito, JUnit, and Postman. 
-
-* Stretch Goal (Optional requirements)
+Stretch Goal (Optional requirements)
 
 * Deploy project entirely on AWS services, S3 Buckets, EC2, and RDS.
 
@@ -32,13 +23,12 @@ The application shall deploy onto a Server.
 
 * Users can upload a document or image of their receipt when submitting reimbursements. 
 
-* The application will send an email to employees letting them know that they have been registered as a new user, giving them their temporary password 
 
 
 
-Minimum Application Functionality
+## User Stories
 
-	Employee
+Employee
 
 * I can log in to view past tickets (pending, approved rejected)
  
@@ -48,8 +38,10 @@ Minimum Application Functionality
 
 * Reimbursement ticket must specify the amount to be reimbursed and a description that the employee may add (in addition to the type) and a time stamp associated with it.
 
+* (Stretch Goal)The application will send an email to employees letting them know that they have been registered as a new user, giving them their temporary password 
 
-	Finance Manager
+
+Finance Manager
 
 * As a finance manager, I can log in to view all the reimbursements for all employees.
 
