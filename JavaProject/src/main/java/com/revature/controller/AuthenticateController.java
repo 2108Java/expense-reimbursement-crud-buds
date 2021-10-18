@@ -58,30 +58,31 @@ public class AuthenticateController {
 				ctx.sessionAttribute("access","manager");
 
 			  loggy.info("Redirecting...");
-				ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/manager");
+				ctx.res.sendRedirect("http://localhost:8000/manager");
 				
 			}else{
 				loggy.info("Setting 'user' session attribute");
 				ctx.sessionAttribute("user", em);
 		    
-        loggy.info("Setting access level to 'customer'");
+				loggy.info("Setting access level to 'customer'");
 				ctx.sessionAttribute("access","customer");
         
-        loggy.info("Redirecting...");
-			  ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/home");
+				loggy.info("Redirecting...");
+				ctx.res.sendRedirect("http://localhost/home");
 
 			}
 
 			
 		
+			}else {
+				loggy.info("Redirecting...");
+				ctx.res.sendRedirect("http://localhost:8000/");
+			}	
+		
 		}else {
-      loggy.info("Redirecting...");
-			ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/");
-		}
-	}else {
-		loggy.info("Username or Password is empty");
-		loggy.info("Redirecting...");
-		ctx.res.sendRedirect("http://ec2-52-15-202-41.us-east-2.compute.amazonaws.com:8000/");
+			loggy.info("Username or Password is empty");
+			loggy.info("Redirecting...");
+			ctx.res.sendRedirect("http://localhost:8000/");
 	}
 
 		return page;

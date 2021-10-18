@@ -18,7 +18,7 @@ public class MainDriver {
 		 Javalin app = Javalin.create(config -> config.addStaticFiles(
 					staticFiles ->
 					{
-						staticFiles.directory = "/public";
+						staticFiles.directory = "/";
 					}
 					)).start(8000);
 		 
